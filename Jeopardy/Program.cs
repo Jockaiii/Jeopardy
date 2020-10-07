@@ -6,7 +6,9 @@ namespace Jeopardy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            JeopardyGame.StartGame();
+            JeopardyQuestions.GetQuestion();
+            JeopardyQuestions.CheckAnswer();
         }
     }
 }
