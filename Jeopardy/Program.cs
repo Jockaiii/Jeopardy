@@ -16,7 +16,7 @@ namespace Jeopardy
             JeopardyGame input1 = new JeopardyGame();
             int[] UserInput = input1.UserInput(round);
 
-            JeopardyQuestions.GetQuestion(UserInput, columns);
+            round1.GetQuestion(UserInput, columns);
 
             Console.WriteLine(JeopardyQuestions.CheckAnswer(JeopardyQuestions.GetAnswer(), UserInput, columns));  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt       
         }

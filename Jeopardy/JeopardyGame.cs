@@ -14,7 +14,7 @@ namespace Jeopardy
          public int[] UserInput(int round)
         {
             Console.Write("Choose category (1-4) :");
-            int category = int.Parse(Console.ReadLine());
+            int category = int.Parse(Console.ReadLine());   // Måste hitta ett sätt att lagra 1-4 som refererande kategori.
 
             if (round == 1)
             {
