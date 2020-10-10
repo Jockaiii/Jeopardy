@@ -1,47 +1,85 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.ComponentModel;
+using System.Threading;
+using System.Data.Common;
 
 namespace Jeopardy
 {
     class JeopardyQuestions
-    {        
-        static public void GetQuestion()
+    {
+         public string[] GetChoices(int round, int points)
         {
-            Random random = new Random();
-            int season = random.Next(1, 36);
-            string path = @"C:\Users\joaki\source\repos\Jeopardy\Jeopardy\jeopardy_questions\season1.tsv";
-            string a = "100";
+            Random random = new Random();          
+            string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines ="";
+            string[] columns = null;
+            var category = 0;
+         
+            for (int i = 0; i < 4; i++)
+            {
+                using (StreamReader sr = File.OpenText(path))
+                {
+                    while (( lines = sr.ReadLine()) != null)
+                    {
+                        columns = lines.Split("\t"); // Delar en sträng (row) i en substring beroende på "sträng sepereraren"("\t") som sedan lagras i en array (columns)
+                        //do
+                        //{
+                        //    category = random.Next(0, lines.Length);
+                        //} while (category % 10 == 0);
 
-            //string st = File.ReadAllText(path);
-            //Console.WriteLine(st);
+                        if (columns[0] == round.ToString() && columns[1] == points.ToString())
+                        {
+                            Console.WriteLine(columns[3]);
+                            break;
+                        }
+                    }
+                }
+            }
+            return columns;
+        }      
+
+        static public void GetQuestion(int[]UserInput, string[] columns)
+        {
+            string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", row;
 
             using (StreamReader sr = File.OpenText(path))
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                while ((row = sr.ReadLine()) != null)
                 {
-                    if (line.Contains.(a))
+                    if (columns[3] == UserInput[0].ToString() && columns[1] == UserInput[1].ToString())
                     {
-                        Console.WriteLine(line);
+                        Console.WriteLine(columns[4]);
                     }
-                    
                 }
             }
         }
 
         static public string GetAnswer()
         {
-            string answer = "svar";
+            Console.Write("Ange ditt svar :");
+            string answer = Console.ReadLine();
             return answer;
         }
 
-        static public bool CheckAnswer(string answer)
+        static public bool CheckAnswer(string answer, int[] UserInput, string[] columns)
         {
-            if (answer == GetAnswer())
+            string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", row;
+
+            using (StreamReader sr = File.OpenText(path))
             {
-                return true;
+                while ((row = sr.ReadLine()) != null)
+                {
+                    if (answer == columns[5])
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
             }
-            return false;
         }
     }
 }
