@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Xml.Serialization;
 
 namespace Jeopardy
@@ -9,23 +10,9 @@ namespace Jeopardy
         protected string[] choices = new string[4];
         protected string [] columns = null; 
         protected string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty;
-        protected int rememberRow;
+        protected int count;
         protected Random random = new Random();
-
-
-        public int StreamReader()
-        {
-            using (StreamReader sr = File.OpenText(path))
-            {
-                while ((lines = sr.ReadLine()) != null)
-                {
-                    columns = lines.Split("\t");
-                }
-            }
-
-
-            return rememberRow;
-        }
+        
         public string[] GetChoices(int round, int points)
         {
             var category = 0;
@@ -60,17 +47,19 @@ namespace Jeopardy
                 while ((lines =sr.ReadLine()) != null)
                 {
                     columns = lines.Split("\t");
-                    if (columns[3] == choices[UserInput[0]-1].ToString() && columns[1] == UserInput[1].ToString()) // Måste lagra UserInput[1] på något sätt så att det inte automatisk antar 100 poäng
+                    if (columns[3] == choices[UserInput[0]-1].ToString() && columns[1] == UserInput[1].ToString())
                     {
+                        Console.WriteLine(points);
                         Console.WriteLine(columns[5]);
                         //rememberRow = int.Parse(lines);
                         break;
                     }
+                    count++;
                 }
             }
         }
 
-        static public string GetAnswer()
+        static public string GetAnswer() // Borde flyttas till JeopardyGame.cs
         {
             Console.Write("Ange ditt svar :");
             string answer = Console.ReadLine();
@@ -81,13 +70,14 @@ namespace Jeopardy
         {
             using (StreamReader sr = File.OpenText(path))
             {
-                while ((lines = sr.ReadLine()) != null)
+                for (int i = 0; i < count; i++) // Skippar alla rader innan den som valdes på GetQuestions
                 {
-                    columns = lines.Split("\t");
-                    if (columns[6] == answer)
-                    {
-                        return true;
-                    }
+                    sr.ReadLine();
+                }
+                columns = lines.Split("\t");
+                if (columns[6] == answer)
+                {
+                    return true;
                 }
             }
             return false;

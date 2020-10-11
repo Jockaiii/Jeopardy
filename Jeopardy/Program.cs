@@ -22,7 +22,7 @@ namespace Jeopardy
         }
     }
 }
-// TODO: Fixa så att fler frågor än 100 poäng fungerar.
+// TODO:
 // Fixa Slumpval av flera kategorier kategorier
 // Fixa ett poängsystem. + vid rätt svar - vid fel.
 // Fixa så svar inte är case sensitive
