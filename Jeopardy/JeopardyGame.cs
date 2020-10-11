@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http;
 
 namespace Jeopardy
 {
@@ -10,7 +9,7 @@ namespace Jeopardy
         {
             if (round == 1)
             {
-                Console.WriteLine("Welcome to jeopardy! The game wher you answer with questions!");
+                Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
                 Console.WriteLine("Please choose your category and amount of points");
             }
             else if(round == 2)
@@ -23,26 +22,26 @@ namespace Jeopardy
          {
             bool input;
 
-            Console.Write("Choose category (1-4): ");
+            Console.Write("Choose category (1-6): ");
             do
             {
                 try
                 {
                     category = int.Parse(Console.ReadLine());
-                    if (category > 0 && category < 5)
+                    if (category > 0 && category < 7)
                     {
                         input = true;
                     }
                     else
                     {
-                        Console.Write("Choose a number between 1-4: ");
+                        Console.Write("Choose a number between 1-6: ");
                         input = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose a number between 1-4: ");
+                    Console.Write("Choose a number between 1-6: ");
                     input = false;
                 }
             } while (input == false);
@@ -73,14 +72,14 @@ namespace Jeopardy
                     }
                     else
                     {
-                        Console.WriteLine("Choose amount of points(100-1000):");
+                        Console.WriteLine("Choose amount of points(100-1000): ");
                         input = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose amount of points(100-1000) :");
+                    Console.Write("Choose amount of points(100-1000): ");
                 }
             } while (input == false);
 
@@ -101,7 +100,7 @@ namespace Jeopardy
         {
             int score = 0;
             score += a;
-            Console.WriteLine("Your score is " + score);
+            Console.WriteLine("Your score is: " + score);
         }
     }
 }

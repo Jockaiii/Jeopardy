@@ -23,6 +23,7 @@ namespace Jeopardy
     }
 }
 // TODO:
+// Fixa så att man måste svara på alla frågorna innan spelet (eller rundan) avslutas
 // Fixa så att fler än 1 runda används.
 // Fixa så svar inte kräver bindestreck och apostrofer.
 // Fixa så att man måste lägga till en fråga med svaret

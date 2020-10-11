@@ -5,7 +5,7 @@ namespace Jeopardy
 {
     class JeopardyQuestions : JeopardyGame // Tanken är att ärva fälten från JeopardyGame så att det behöves returneras något mellan klasserna.
     {
-        protected string[] KeepCategory = new string[4];
+        protected string[] KeepCategory = new string[6];
         protected string [] columns = null; 
         protected string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty;
         protected int count;
@@ -13,8 +13,8 @@ namespace Jeopardy
 
         public string[] GetChoices(int round, int points)
         {
-            var hej = 1;
-            for (int i = 0; i < 4; i++) // Skriver skriver ut 4 kategorier.
+            var RandomCategory = 1;
+            for (int i = 0; i < 6; i++) // Skriver skriver ut 6 kategorier.
             {
                 using (StreamReader sr = File.OpenText(path)) // Använder StreamReader för att läsa varje rad i .tsv filen
                 {
@@ -23,10 +23,10 @@ namespace Jeopardy
                         columns = lines.Split("\t"); // Delar en sträng (lines) i en substring beroende på "sträng sepereraren"("\t") som sedan lagras i en array (columns)
                         do
                         {
-                            hej = random.Next(0, lines.Length);
-                        } while (hej % 9 == 0); // Slumpar numper mellan rad 0 och sista raden och kollar fortsätter till det är delbart med 9 endast. Och ifall det är det betyder det att det är en kategori
+                            RandomCategory = random.Next(0, lines.Length);
+                        } while (RandomCategory % 9 == 0); // Slumpar numper mellan rad 0 och sista raden och kollar fortsätter till det är delbart med 9 endast. Och ifall det är det betyder det att det är en kategori
 
-                        for (int j = 0; j < hej; j++) // Hoppar över alla element som är mindre än hej.
+                        for (int j = 0; j < RandomCategory; j++) // Hoppar över alla element som är mindre än hej.
                         {
                             sr.ReadLine();
                         }
