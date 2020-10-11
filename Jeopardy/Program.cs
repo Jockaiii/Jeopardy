@@ -23,7 +23,10 @@ namespace Jeopardy
     }
 }
 // TODO:
-// Fixa Slumpval av flera kategorier kategorier
+// Fixa Slumpval av flera kategorier
 // Fixa ett poängsystem. + vid rätt svar - vid fel.
+// Fixa så att fler än 1 runda används.
 // Fixa så svar inte är case sensitive
 // Fixa så att man måste lägga till en fråga med svaret
+// Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod.
+// Lös så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
