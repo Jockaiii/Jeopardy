@@ -11,7 +11,7 @@ namespace Jeopardy
             Console.WriteLine("Please choose your category and amount of points");
         }
          public int[] UserInput(int round)
-        {
+         {
             Console.Write("Choose category (1-4) :");
             category = int.Parse(Console.ReadLine());
 
@@ -31,6 +31,12 @@ namespace Jeopardy
             UserInput[1] = points;
 
             return UserInput;
+         }
+        static public string GetAnswer()
+        {
+            Console.Write("Ange ditt svar :");
+            string answer = Console.ReadLine();
+            return answer;
         }
     }
 }

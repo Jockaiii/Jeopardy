@@ -18,7 +18,7 @@ namespace Jeopardy
 
             round1.GetQuestion(UserInput, columns); // Tillkallar ytterligare en metod från objektet och skickar med de 2 lagrade arrayerna i parametern.
 
-            Console.WriteLine(round1.CheckAnswer(JeopardyQuestions.GetAnswer(), UserInput, columns));  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt       
+            Console.WriteLine(round1.CheckAnswer(JeopardyGame.GetAnswer(), UserInput, columns));  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt       
         }
     }
 }

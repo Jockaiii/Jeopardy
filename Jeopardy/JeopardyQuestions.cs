@@ -59,13 +59,6 @@ namespace Jeopardy
             }
         }
 
-        static public string GetAnswer() // Borde flyttas till JeopardyGame.cs
-        {
-            Console.Write("Ange ditt svar :");
-            string answer = Console.ReadLine();
-            return answer;
-        }
-
         public bool CheckAnswer(string answer, int[] UserInput, string[] columns)
         {
             using (StreamReader sr = File.OpenText(path))
