@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Jeopardy
 {
@@ -14,7 +12,7 @@ namespace Jeopardy
          public int[] UserInput(int round)
         {
             Console.Write("Choose category (1-4) :");
-            int category = int.Parse(Console.ReadLine());   // Måste hitta ett sätt att lagra 1-4 som refererande kategori.
+            int category = int.Parse(Console.ReadLine());
 
             if (round == 1)
             {
