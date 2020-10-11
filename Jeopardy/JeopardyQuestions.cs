@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
-using System.Xml.Serialization;
 
 namespace Jeopardy
 {
@@ -11,11 +9,11 @@ namespace Jeopardy
         protected string [] columns = null; 
         protected string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty;
         protected int count;
-        protected Random random = new Random();
-        
+        Random random = new Random();
+
         public string[] GetChoices(int round, int points)
         {
-            
+            var hej = 1;
             for (int i = 0; i < 4; i++) // Skriver skriver ut 4 kategorier.
             {
                 using (StreamReader sr = File.OpenText(path)) // Använder StreamReader för att läsa varje rad i .tsv filen
@@ -23,10 +21,15 @@ namespace Jeopardy
                     while ((lines = sr.ReadLine()) != null) /// Fortsätter att läsa varje rad så länge inte raden innehåller null
                     {
                         columns = lines.Split("\t"); // Delar en sträng (lines) i en substring beroende på "sträng sepereraren"("\t") som sedan lagras i en array (columns)
-                        //do
-                        //{
-                        //    category = random.Next(0, lines.Length);
-                        //} while (category % 10 == 0);
+                        do
+                        {
+                            hej = random.Next(0, lines.Length);
+                        } while (hej % 9 == 0);
+
+                        for (int j = 0; j < hej; j++)
+                        {
+                            sr.ReadLine();
+                        }
 
                         if (columns[0] == round.ToString() && columns[1] == points.ToString()) // Kollar om column[0] i raden är = round. och ifall column[1] är = lägsta poängen för rundan & kategorin
                         {

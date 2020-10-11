@@ -6,10 +6,18 @@ namespace Jeopardy
     class JeopardyGame
     {
         protected int category, points;
-        public static void StartGame()
+        public static void StartGame(int round)
         {
-            Console.WriteLine("Welcome to jeopardy! The game wher you answer with questions!");
-            Console.WriteLine("Please choose your category and amount of points");
+            if (round == 1)
+            {
+                Console.WriteLine("Welcome to jeopardy! The game wher you answer with questions!");
+                Console.WriteLine("Please choose your category and amount of points");
+            }
+            else if(round == 2)
+            {
+                Console.WriteLine("Round 2 Lets go again!");
+            }
+            
         }
          public int[] UserInput(int round)
          {
