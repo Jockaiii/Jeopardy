@@ -24,9 +24,9 @@ namespace Jeopardy
                         do
                         {
                             hej = random.Next(0, lines.Length);
-                        } while (hej % 9 == 0);
+                        } while (hej % 9 == 0); // Slumpar numper mellan rad 0 och sista raden och kollar fortsätter till det är delbart med 9 endast. Och ifall det är det betyder det att det är en kategori
 
-                        for (int j = 0; j < hej; j++)
+                        for (int j = 0; j < hej; j++) // Hoppar över alla element som är mindre än hej.
                         {
                             sr.ReadLine();
                         }
@@ -47,7 +47,7 @@ namespace Jeopardy
         {
             using (StreamReader sr = File.OpenText(path))
             {
-                while ((lines =sr.ReadLine()) != null)
+                while ((lines = sr.ReadLine()) != null)
                 {
                     columns = lines.Split("\t");
                     if (columns[3] == KeepCategory[UserInput[0]-1].ToString() && columns[1] == UserInput[1].ToString()) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
@@ -64,16 +64,20 @@ namespace Jeopardy
         {
             using (StreamReader sr = File.OpenText(path))
             {
-                for (int i = 0; i < count; i++) // Skippar alla rader innan den som valdes på GetQuestions
+                for (int i = 0; i < count; i++) // Skippar alla rader innan den som valdes på GetQuestions()
                 {
                     sr.ReadLine();
                 }
                 columns = lines.Split("\t");
-                if (columns[6] == answer)
+                if (columns[6].ToLower() == answer.ToLower())
                 {
+                    JeopardyGame.Score(UserInput[1]);
                     return true;
                 }
             }
+            UserInput[1] *= -1;
+            JeopardyGame.Score(UserInput[1]);
+            UserInput[1] *= -1;
             return false;
         }
     }

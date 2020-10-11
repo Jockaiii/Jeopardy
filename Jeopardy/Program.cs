@@ -23,10 +23,9 @@ namespace Jeopardy
     }
 }
 // TODO:
-// Fixa Slumpval av flera kategorier
-// Fixa ett poängsystem. + vid rätt svar - vid fel.
 // Fixa så att fler än 1 runda används.
-// Fixa så svar inte är case sensitive
+// Fixa så svar inte kräver bindestreck och apostrofer.
 // Fixa så att man måste lägga till en fråga med svaret
-// Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod.
-// Lös så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
+// Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
+// Fixa så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
+// Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?

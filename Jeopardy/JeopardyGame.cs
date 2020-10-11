@@ -21,9 +21,9 @@ namespace Jeopardy
         }
          public int[] UserInput(int round)
          {
-            bool input = false;
+            bool input;
 
-            Console.Write("Choose category (1-4) :");
+            Console.Write("Choose category (1-4): ");
             do
             {
                 try
@@ -35,14 +35,14 @@ namespace Jeopardy
                     }
                     else
                     {
-                        Console.Write("Choose a number between 1-4 :");
+                        Console.Write("Choose a number between 1-4: ");
                         input = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose a number between 1-4 :");
+                    Console.Write("Choose a number between 1-4: ");
                     input = false;
                 }
             } while (input == false);
@@ -53,7 +53,7 @@ namespace Jeopardy
             }
             else if (round == 2)
             {
-                Console.WriteLine("400\n600\n800\n1000");
+                Console.WriteLine("200\n400\n800\n1000");
             }            
             Console.Write("Choose amount of points(100-1000) :");
 
@@ -95,6 +95,13 @@ namespace Jeopardy
             Console.Write("Input your answer: ");
             string answer = Console.ReadLine();
             return answer;
+        }
+
+        static public void Score(int a)
+        {
+            int score = 0;
+            score += a;
+            Console.WriteLine("Your score is " + score);
         }
     }
 }
