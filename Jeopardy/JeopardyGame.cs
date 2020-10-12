@@ -9,20 +9,22 @@ namespace Jeopardy
         {
             if (round == 1)
             {
+                Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
-                Console.WriteLine("Please choose your category and amount of points");
+                Console.WriteLine("Please choose your category and amount of points.");
+                Console.WriteLine("--------------------------------------------------------------");
             }
             else if(round == 2)
             {
-                Console.WriteLine("Round 2 Lets go again!");
+                Console.WriteLine("\nRound 2 Lets go again!");
             }
             
         }
          public int[] UserInput(int round)
          {
             bool input;
-
-            Console.Write("Choose category (1-6): ");
+            Console.WriteLine("------------------------------");
+            Console.Write("Select a number between (1-6): ");
             do
             {
                 try
@@ -34,7 +36,7 @@ namespace Jeopardy
                     }
                     else
                     {
-                        Console.Write("Choose a number between 1-6: ");
+                        Console.Write("Select a number between 1-6: ");
                         input = false;
                     }
                 }
@@ -48,13 +50,14 @@ namespace Jeopardy
 
             if (round == 1)
             {
+                Console.WriteLine("------------------------------");
                 Console.WriteLine("100\n200\n400\n500");
             }
             else if (round == 2)
             {
                 Console.WriteLine("200\n400\n800\n1000");
             }            
-            Console.Write("Choose amount of points(100-1000) :");
+            Console.Write("Choose amount of points (100-1000): ");
 
             input = false;
             do
@@ -72,14 +75,14 @@ namespace Jeopardy
                     }
                     else
                     {
-                        Console.WriteLine("Choose amount of points(100-1000): ");
+                        Console.WriteLine("Choose amount of points (100-1000): ");
                         input = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose amount of points(100-1000): ");
+                    Console.Write("Choose amount of points (100-1000): ");
                 }
             } while (input == false);
 

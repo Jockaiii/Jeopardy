@@ -14,7 +14,7 @@ namespace Jeopardy
         public string[] GetChoices(int round, int points)
         {
             var RandomCategory = 1;
-            for (int i = 0; i < 6; i++) // Skriver skriver ut 6 kategorier.
+            for (int i = 0; i < 6; i++) // Skriver ut 6 kategorier.
             {
                 using (StreamReader sr = File.OpenText(path)) // Använder StreamReader för att läsa varje rad i .tsv filen
                 {
@@ -24,7 +24,7 @@ namespace Jeopardy
                         do
                         {
                             RandomCategory = random.Next(0, lines.Length);
-                        } while (RandomCategory % 9 == 0); // Slumpar numper mellan rad 0 och sista raden och kollar fortsätter till det är delbart med 9 endast. Och ifall det är det betyder det att det är en kategori
+                        } while (RandomCategory % 9 == 0); // Slumpar nummer mellan rad 0 och sista raden och kollar fortsätter till det är delbart med 9 endast. Och ifall det är det betyder det att det är en kategori
 
                         for (int j = 0; j < RandomCategory; j++) // Hoppar över alla element som är mindre än hej.
                         {
