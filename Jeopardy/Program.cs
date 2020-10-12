@@ -30,3 +30,7 @@ namespace Jeopardy
 // Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
 // Fixa så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?
+
+// TODO: 
+// Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
+// Försöka göra texten mer enkel att läsa
