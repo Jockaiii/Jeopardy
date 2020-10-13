@@ -5,6 +5,8 @@ namespace Jeopardy
     class JeopardyGame
     {
         protected int category, points;
+        protected int score { get; set; } = 0;
+        public int count = 0, maxQuestions;
         public static void StartGame(int round)
         {
             if (round == 1)
@@ -16,9 +18,8 @@ namespace Jeopardy
             {
                 Console.WriteLine("Round 2 Lets go again!");
             }
-            
         }
-         public int[] UserInput(int round)
+         public int[] UserInput(int round, int[] Input)
          {
             bool input;
 
@@ -27,8 +28,23 @@ namespace Jeopardy
             {
                 try
                 {
+                    maxQuestions = 0;
                     category = int.Parse(Console.ReadLine());
-                    if (category > 0 && category < 7)
+                    for (int i = 0; i < Input.Length; i++)
+                    {
+                        if (Input[i] == category)
+                        {
+                            maxQuestions++;
+                        }
+                    }
+                    if (maxQuestions == 4)
+                    {
+                        Console.WriteLine("Please choose a category with non selected questions");
+                        Console.Write("Choose a number between 1-6: ");
+                        category = 7;
+                        input = false;
+                    }
+                    else if (category > 0 && category <= 6)
                     {
                         input = true;
                     }
@@ -45,6 +61,7 @@ namespace Jeopardy
                     input = false;
                 }
             } while (input == false);
+            Input[count] = category;
 
             if (round == 1)
             {
@@ -53,26 +70,37 @@ namespace Jeopardy
             else if (round == 2)
             {
                 Console.WriteLine("200\n400\n800\n1000");
-            }            
-            Console.Write("Choose amount of points(100-1000) :");
-
+            }    
+            
+            Console.Write("Choose amount of points(100-1000): ");
             input = false;
             do
             {
                 try
                 {
                     points = int.Parse(Console.ReadLine());
+                    for (int i = 0; i < count + 2; i++)
+                    {
+                        if (Input[i] == category && Input[i + 1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
+                        {
+                            Console.WriteLine("Please choose a question that hasn't already been selected");
+                            points = 0; // Lite fulhack men sätter round till 5 så att else körs och man måste välja om poäng
+                        }
+                    }
                     if (round == 1 && points == 100 || round == 1 && points == 200 || round == 1 && points == 400 || round == 1 && points == 500)
                     {
+                        Input[count + 1] = points;
                         input = true;
                     }
-                    else if(round == 2 && points == 200 || round == 2 && points == 400 || round == 2 && points == 800 || round == 2 && points == 1000)
+                    else if (round == 2 && points == 200 || round == 2 && points == 400 || round == 2 && points == 800 || round == 2 && points == 1000)
                     {
+                        Input[count + 1] = points;
                         input = true;
                     }
                     else
                     {
-                        Console.WriteLine("Choose amount of points(100-1000): ");
+                        Console.WriteLine("Please choose a valid number");
+                        Console.Write("Choose amount of points(100-1000): ");
                         input = false;
                     }
                 }
@@ -80,26 +108,32 @@ namespace Jeopardy
                 {
                     Console.WriteLine(e.Message);
                     Console.Write("Choose amount of points(100-1000): ");
+                    input = false;
                 }
             } while (input == false);
 
-            int[] UserInput = new int[2];
-            UserInput[0] = category;
-            UserInput[1] = points;
-
-            return UserInput;
+            count = count +2; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
+            return Input;
          }
         static public string GetAnswer()
         {
             Console.Write("Input your answer: ");
             string answer = Console.ReadLine();
-            return answer;
+            return answer == string.Empty ? GetAnswer() : answer; 
         }
 
-        static public void Score(int a)
+        public void Score(bool CheckAnswer, int nextScore)
         {
-            int score = 0;
-            score += a;
+            if (CheckAnswer)
+            {
+                Console.WriteLine("Correct!");
+                score += nextScore;
+            }
+            else
+            {
+                Console.WriteLine("Incorrect!");
+                score -= nextScore;
+            }
             Console.WriteLine("Your score is: " + score);
         }
     }
