@@ -12,10 +12,10 @@ namespace Jeopardy
             JeopardyQuestions round1 = new JeopardyQuestions(); // instansierar ett nytt objekt av JeopardyQuestions()
             JeopardyGame input = new JeopardyGame(); // instansierar ett nytt objekt av JeopardyGame()
 
+            JeopardyGame.StartGame(round);
+
             for (int i = 0; i <= 3; i++)
             {
-                JeopardyGame.StartGame(round);
-
                 string[] KeepCategory = round1.GetChoices(round, points); // Tillkallar en metod från objektet och skickar med startreferenser i parametern. Tilldelar en string array värdet av metoden
 
                 for (int j = 0; j <= 16; j++)
@@ -35,22 +35,21 @@ namespace Jeopardy
 
                     round1.CheckAnswer(JeopardyGame.GetAnswer(), KeepInput, input, input.count);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
                 }
+                round++;
+                points += 100;
             }
         }
     }
 }
 // TODO Bakgrund:
-// Fixa så att man måste svara på alla frågorna innan spelet (eller rundan) avslutas
-// Fixa så att fler än 1 runda används.
+// Fixa så att poäng som skrivs ut och väljes är från .tsv filen. Så att t.ex en fråga väljs på runda 1 med 100 poäng när det inte finns.
 // Fixa så att man måste lägga till en fråga med svaret
 // Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
 // Fixa så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?
+// Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
 
 //TODO Visuellt:
 // Fixa så att man ser ifall frågan har valts och ifall kategorin har slut på ovalda frågor
 // Fixa så svar inte kräver bindestreck och apostrofer.
-
-// TODO: 
-// Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
 // Försöka göra texten mer enkel att läsa

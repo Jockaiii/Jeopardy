@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 
 namespace Jeopardy
 {
@@ -9,13 +8,14 @@ namespace Jeopardy
         protected string[] keepCategory = new string[6];
         protected string [] columns = null; 
         protected string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty, keepAnswer;
-        Random random = new Random();
         protected int count;
+        Random random = new Random();
 
         public string[] GetChoices(int round, int points)
         {
             var randomLine = 1;
             bool validLine = false;
+
             for (int i = 0; i < 6; i++) // Skriver skriver ut 6 kategorier.
             {
                 do
@@ -67,6 +67,7 @@ namespace Jeopardy
                 }
             }
         }
+
         public void CheckAnswer(string answer, int[] Input, JeopardyGame input, int count)
         {
             if (keepAnswer.ToLower() == answer.ToLower())

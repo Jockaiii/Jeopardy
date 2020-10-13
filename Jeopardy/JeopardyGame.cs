@@ -7,6 +7,7 @@ namespace Jeopardy
         protected int category, points;
         protected int score { get; set; } = 0;
         public int count = 0, maxQuestions;
+
         public static void StartGame(int round)
         {
             if (round == 1)
@@ -26,12 +27,14 @@ namespace Jeopardy
             bool input;
             Console.WriteLine("------------------------------");
             Console.Write("Select a number between (1-6): ");
+
             do
             {
                 try
                 {
                     maxQuestions = 0;
                     category = int.Parse(Console.ReadLine());
+
                     for (int i = 0; i < Input.Length; i++)
                     {
                         if (Input[i] == category)
@@ -39,6 +42,7 @@ namespace Jeopardy
                             maxQuestions++;
                         }
                     }
+
                     if (maxQuestions == 4)
                     {
                         Console.WriteLine("Please choose a category with non selected questions");
@@ -63,6 +67,7 @@ namespace Jeopardy
                     input = false;
                 }
             } while (input == false);
+
             Input[count] = category;
 
             if (round == 1)
@@ -77,6 +82,7 @@ namespace Jeopardy
             
             Console.Write("Choose amount of points(100-1000): ");
             input = false;
+
             do
             {
                 try
@@ -90,6 +96,7 @@ namespace Jeopardy
                             points = 0; // Lite fulhack men sätter round till 5 så att else körs och man måste välja om poäng
                         }
                     }
+
                     if (round == 1 && points == 100 || round == 1 && points == 200 || round == 1 && points == 400 || round == 1 && points == 500)
                     {
                         Input[count + 1] = points;
@@ -118,6 +125,7 @@ namespace Jeopardy
             count = count +2; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
             return Input;
          }
+
         static public string GetAnswer()
         {
             Console.Write("Input your answer: ");
@@ -127,6 +135,7 @@ namespace Jeopardy
 
         public void Score(bool CheckAnswer, int nextScore)
         {
+            Console.Clear();
             if (CheckAnswer)
             {
                 Console.WriteLine("Correct!");
