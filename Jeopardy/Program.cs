@@ -50,3 +50,7 @@ namespace Jeopardy
 //TODO Visuellt:
 // Fixa så att man ser ifall frågan har valts och ifall kategorin har slut på ovalda frågor
 // Fixa så svar inte kräver bindestreck och apostrofer.
+
+// TODO: 
+// Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
+// Försöka göra texten mer enkel att läsa
