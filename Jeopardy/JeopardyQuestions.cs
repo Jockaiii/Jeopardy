@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Jeopardy
 {
@@ -51,7 +52,7 @@ namespace Jeopardy
             return keepCategory;
         }
 
-        public void GetPoints(int[]Input, int pos)
+        public void GetPoints(int round, int[]Input, int pos)
         {
             using (StreamReader sr = File.OpenText(path))
             {
@@ -59,7 +60,7 @@ namespace Jeopardy
                 {
                     columns = lines.Split("\t");
 
-                    if (columns[3] == keepCategory[Input[pos - 2] - 1].ToString())
+                    if (columns[0] == round.ToString() && columns[3] == keepCategory[Input[pos - 1] - 1].ToString())
                     {
                         Console.WriteLine(columns[1]);
                     }
@@ -74,7 +75,7 @@ namespace Jeopardy
                 while ((lines = sr.ReadLine()) != null)
                 {
                     columns = lines.Split("\t");
-                    if (columns[3] == keepCategory[Input[count - 2]-1].ToString() && columns[1] == Input[count - 1].ToString()) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
+                    if (columns[3] == keepCategory[Input[count - 2]-1].ToString() && Input[count - 1].ToString() == columns[1]) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
                     {
                         Console.WriteLine(columns[5]);
                         keepAnswer = columns[6];
@@ -84,15 +85,15 @@ namespace Jeopardy
             }
         }
 
-        public void CheckAnswer(string answer, int[] Input, JeopardyGame input, int count)
+        public void CheckAnswer(string answer, int[] pointsInput, JeopardyGame input, int count)
         {
             if (keepAnswer.ToLower() == answer.ToLower())
             {
-                input.Score(true, Input[count - 1]);
+                input.Score(true, pointsInput[count - 1]);
             }
             else
             {
-                input.Score(false, Input[count - 1]);
+                input.Score(false, pointsInput[count - 1]);
             }
         }
     }

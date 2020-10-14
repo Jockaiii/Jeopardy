@@ -22,8 +22,8 @@ namespace Jeopardy
                 Console.WriteLine("Round 2 Lets go again!");
             }
         }
-         public int[] UserInput(int round, int[] Input)
-         {
+        public int[] CategoryInput(int round, int[] Input)
+        {
             bool input;
             Console.WriteLine("------------------------------");
             Console.Write("Select a category (1-6): ");
@@ -70,18 +70,15 @@ namespace Jeopardy
 
             Input[count] = category;
 
-            if (round == 1)
-            {
-                Console.WriteLine("------------------------------");
-                Console.WriteLine("100\n200\n400\n500");
-            }
-            else if (round == 2)
-            {
-                Console.WriteLine("200\n400\n800\n1000");
-            }    
-            
+            count++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
+            return Input;
+        }
+
+        public int[] PointsInput(int round, int[] Input)
+        {
+            bool input;
+            Console.WriteLine("------------------------------");
             Console.Write("Choose amount of points(100-1000): ");
-            input = false;
 
             do
             {
@@ -97,34 +94,33 @@ namespace Jeopardy
                         }
                     }
 
-                    if (round == 1 && points == 100 || round == 1 && points == 200 || round == 1 && points == 400 || round == 1 && points == 500)
+                    if (round == 1)
                     {
-                        Input[count + 1] = points;
+                        Input[count] = points;
                         input = true;
                     }
-                    else if (round == 2 && points == 200 || round == 2 && points == 400 || round == 2 && points == 800 || round == 2 && points == 1000)
+                    else if (round == 2)
                     {
-                        Input[count + 1] = points;
+                        Input[count] = points;
                         input = true;
                     }
                     else
                     {
                         Console.WriteLine("Please choose a valid number");
-                        Console.Write("Choose amount of points(100-1000): ");
+                        Console.Write("Choose amount of points: ");
                         input = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose amount of points(100-1000): ");
+                    Console.Write("Choose amount of points: ");
                     input = false;
                 }
             } while (input == false);
-
-            count = count +2; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
+            count++;
             return Input;
-         }
+        }
 
         static public string GetAnswer()
         {
