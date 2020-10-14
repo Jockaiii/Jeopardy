@@ -6,27 +6,27 @@ namespace Jeopardy
 {
     class JeopardyQuestions
     {
-        protected string[] keepCategory = new string[6];
+        public string[] keepCategory = new string[6];
         protected string [] columns = null; 
         protected string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty, keepAnswer;
         public int amountQuestions = 1;
         public int[] keepPoints = new int[10];
         Random random = new Random();
 
-        public string[] GetData(int round)
+        public void GetCategory(int round)
         {
             var randomLine = 1;
             bool validLine = false;
 
-            for (int i = 0; i < 6; i++) // Skriver ut en kategori 6 gånger.
+            for (int i = 0; i < 6; i++) // Slumpar en rad 6 gånger och sparar kategorierna i de randerna och skickar dem till Program.cs för att skrivas ut.
             {
                 do
                 {
                     using (StreamReader sr = File.OpenText(path)) // Använder StreamReader för att läsa varje rad i .tsv filen
                     {
-                        while ((lines = sr.ReadLine()) != null) /// Fortsätter att läsa varje rad så länge raden int innehåller null
+                        while ((lines = sr.ReadLine()) != null) /// Fortsätter att läsa varje rad så länge raden inte innehåller null
                         {
-                            columns = lines.Split("\t"); // Delar en sträng (lines) i en substring beroende på "sträng sepereraren"("\t") som sedan lagras i en array (columns)
+                            columns = lines.Split("\t"); // Delar en sträng (lines) i en substrings beroende på "sträng sepereraren"("\t") som sedan lagras i element inom en array ([]columns)
 
                             randomLine = random.Next(1, 359679); // Slumpar nummer mellan rad 1 och sista raden
 
@@ -37,7 +37,7 @@ namespace Jeopardy
 
                             if (columns[0] == round.ToString() && !keepCategory.Contains(columns[3])) // Kollar om column[0] i raden är = round och så att kategorin inte tidigare har valts.
                             {
-                                keepCategory[i] = columns[3]; // Sparar kategorierna i []keepCategory så att när jag tillkallar GetQuestion() kan jag leta efter kategorin som valdes av användaren.
+                                keepCategory[i] = columns[3]; // Sparar kategorierna i []keepCategory
                                 validLine = true;
                                 break;
                             }
@@ -49,10 +49,9 @@ namespace Jeopardy
                     }
                 } while (validLine != true); // Fortsätter att slumpa en rad så länge den inte är till för den nuvarande rundan.
             }
-            return keepCategory;
         }
 
-        public int GetPoints(int round, int[]Input, int pos)
+        public void GetPoints(int round, int[]Input, int pos)
         {
             using (StreamReader sr = File.OpenText(path))
             {
@@ -69,7 +68,6 @@ namespace Jeopardy
                     }
                 }
             }
-            return amountQuestions;
         }
 
         public void GetQuestion(int[] Input, int pos)

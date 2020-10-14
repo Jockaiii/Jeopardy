@@ -5,11 +5,10 @@ namespace Jeopardy
 {
     class JeopardyGame
     {
-        protected int category, points;
-        protected int score { get; set; } = 0;
+        protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
 
-        public static void StartGame(int round)
+        public static void StartRound(int round)
         {
             if (round == 1)
             {
@@ -20,14 +19,17 @@ namespace Jeopardy
             }
             else if(round == 2)
             {
+                Console.Clear();
                 Console.WriteLine("Round 2 Lets go again!");
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Round 3!");
             }
         }
-        public int[] CategoryInput(int round, int[] Input, JeopardyQuestions questions)
+
+        public void CategoryInput(int round, int[] Input, JeopardyQuestions questions)
         {
             bool input;
             Console.WriteLine("------------------------------");
@@ -76,10 +78,9 @@ namespace Jeopardy
             } while (input == false);
 
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
-            return Input;
         }
 
-        public int[] PointsInput(int round, int[] Input, JeopardyQuestions questions)
+        public void PointsInput(int round, int[] Input, JeopardyQuestions questions)
         {
             bool input;
             Console.WriteLine("------------------------------");
@@ -90,6 +91,7 @@ namespace Jeopardy
                 try
                 {
                     points = int.Parse(Console.ReadLine());
+
                     for (int i = 0; i < pos; i++)
                     {
                         if (Input[i] == category && Input[i+1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
@@ -124,7 +126,6 @@ namespace Jeopardy
             } while (input == false);
             
             pos++;
-            return Input;
         }
 
         static public string GetAnswer()

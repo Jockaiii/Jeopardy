@@ -6,51 +6,46 @@ namespace Jeopardy
     {
         static void Main(string[] args)
         {
-            int round = 1; // Startar på runda 1 och referar till 100 poäng columen för att det är frågan som ligger överst i varje kategori (i runda 1. I runda 2 är det 200 poäng som ligger överst)
-            int[] Input = new int[100];
+            int round = 1; // Startar på runda 1
+            int[] Input = new int[100]; // Alla lagrade inputs från användaren. kategorier och antal poäng. Antal kan variera så har 100 för säkerhets skull.
 
             JeopardyQuestions questions = new JeopardyQuestions(); // instansierar ett nytt objekt av JeopardyQuestions()
             JeopardyGame game = new JeopardyGame(); // instansierar ett nytt objekt av JeopardyGame()
 
-            for (int i = 0; i <= 3; i++)
+            for (int i = 0; i <= 3; i++) // Kör all kod 3 gånger för 3 rundor
             {
-                JeopardyGame.StartGame(round);
+                JeopardyGame.StartRound(round);
 
-                string[] keepCategory = questions.GetData(round); // Tillkallar en metod från objektet och skickar med startreferenser i parametern. Tilldelar []keepCategory det som retuneras av metoden
+                questions.GetCategory(round); // Tillkallar en metod från objektet och skickar med den nuvarande rundan.
 
                 do
                 {
-                    for (int j = 0; j < keepCategory.Length; j++)
+                    for (int j = 0; j < questions.keepCategory.Length; j++) // Skriver ut de slumpvalda kategorierna
                     {
-                        Console.WriteLine(keepCategory[j]);
+                        Console.WriteLine(questions.keepCategory[j]);
                     }
-
-                    int[] keepCategoryInput = game.CategoryInput(round, Input, questions); // Tillkallar en metod från objeketet och skicker med en startreferens i parametern. Tilldelar en string array värdet av metoden
-                    Input = keepCategoryInput; // ser till så att input i metoden innehåller de tidigare lagrade inputsen.
+                    game.CategoryInput(round, Input, questions); // Tillkallar en metod från objeketet och skicker med en startreferens i parametern. 
 
                     questions.GetPoints(round, Input, game.pos);
+                    game.PointsInput(round, Input, questions);
 
-                    int[] keepPointsInput = game.PointsInput(round, Input, questions);
-                    Input = keepPointsInput;
+                    questions.GetQuestion(Input, game.pos); // Tillkallar ytterligare en metod från objektet och skickar med inputs och en pos refererare.
+                    questions.CheckAnswer(JeopardyGame.GetAnswer(), Input, game, game.pos);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
 
-                    questions.GetQuestion(Input, game.pos); // Tillkallar ytterligare en metod från objektet och skickar med de 2 lagrade arrayerna i parametern.
+                } while (game.categoriesDepleted <= 6); // Forsätter be användaren om kategori, poäng, frågor och svar tills alla kategorierna är tomma på lediga frågor
 
-                    questions.CheckAnswer(JeopardyGame.GetAnswer(), keepPointsInput, game, game.pos);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
-                } while (game.categoriesDepleted < 6);
-
-                round++;
+                round++; // ökar round så att jag kan hämta kategorier, poäng, inputs och svar på nästa runda.
             }
         }
     }
 }
 // TODO Bakgrund:
+// Fixa så att inte frågor från upprepande kategori skrivs ut.
 // Fixa så att man måste lägga till en fråga med svaret
 // Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
-// Fixa så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?
 
 //TODO Visuellt:
 // Fixa så att man ser ifall frågan har valts och ifall kategorin har slut på ovalda frågor
 // Fixa så svar inte kräver bindestreck och apostrofer.
-// Försöka göra texten enklare att läsa
 // Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
