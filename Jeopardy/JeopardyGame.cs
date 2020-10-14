@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Jeopardy
 {
@@ -6,7 +7,7 @@ namespace Jeopardy
     {
         protected int category, points;
         protected int score { get; set; } = 0;
-        public int count = 0, maxQuestions;
+        public int pos = 0, maxQuestions, categoriesDepleted;
 
         public static void StartGame(int round)
         {
@@ -14,15 +15,19 @@ namespace Jeopardy
             {
                 Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
-                Console.WriteLine("Please choose your category and amount of points.");
+                Console.WriteLine("Please select your category and amount of points.");
                 Console.WriteLine("--------------------------------------------------------------");
             }
             else if(round == 2)
             {
                 Console.WriteLine("Round 2 Lets go again!");
             }
+            else
+            {
+                Console.WriteLine("Round 3!");
+            }
         }
-        public int[] CategoryInput(int round, int[] Input)
+        public int[] CategoryInput(int round, int[] Input, JeopardyQuestions questions)
         {
             bool input;
             Console.WriteLine("------------------------------");
@@ -43,15 +48,17 @@ namespace Jeopardy
                         }
                     }
 
-                    if (maxQuestions == 4)
+                    if (maxQuestions == questions.amountQuestions)
                     {
-                        Console.WriteLine("Please choose a category with non selected questions");
-                        Console.Write("Choose a number between 1-6: ");
+                        Console.WriteLine("Please select a non depleted category");
+                        Console.Write("Select a number between 1-6: ");
+                        categoriesDepleted++;
                         category = 7;
                         input = false;
                     }
                     else if (category > 0 && category <= 6)
                     {
+                        Input[pos] = category;
                         input = true;
                     }
                     else
@@ -63,62 +70,60 @@ namespace Jeopardy
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose a number between 1-6: ");
+                    Console.Write("Select a number between 1-6: ");
                     input = false;
                 }
             } while (input == false);
 
-            Input[count] = category;
-
-            count++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
+            pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
             return Input;
         }
 
-        public int[] PointsInput(int round, int[] Input)
+        public int[] PointsInput(int round, int[] Input, JeopardyQuestions questions)
         {
             bool input;
             Console.WriteLine("------------------------------");
-            Console.Write("Choose amount of points(100-1000): ");
+            Console.Write("Select amount of points: ");
 
             do
             {
                 try
                 {
                     points = int.Parse(Console.ReadLine());
-                    for (int i = 0; i < count + 2; i++)
+                    for (int i = 0; i < pos; i++)
                     {
-                        if (Input[i] == category && Input[i + 1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
+                        if (Input[i] == category && Input[i+1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
                         {
-                            Console.WriteLine("Please choose a question that hasn't already been selected");
+                            Console.WriteLine("Please select a question that hasn't already been selected");
                             points = 0; // Lite fulhack men sätter points till 0 så att else körs och man måste välja om poäng
                         }
                     }
 
-                    if (round == 1)
+                    if (points == 0)
                     {
-                        Input[count] = points;
-                        input = true;
+                        Console.WriteLine("Please select a valid number");
+                        Console.Write("Select amount of points: ");
+                        input = false;
                     }
-                    else if (round == 2)
+                    else if (questions.keepPoints.Contains(points))
                     {
-                        Input[count] = points;
+                        Input[pos] = points;
                         input = true;
                     }
                     else
                     {
-                        Console.WriteLine("Please choose a valid number");
-                        Console.Write("Choose amount of points: ");
                         input = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.Write("Choose amount of points: ");
+                    Console.Write("Select amount of points: ");
                     input = false;
                 }
             } while (input == false);
-            count++;
+            
+            pos++;
             return Input;
         }
 
@@ -129,7 +134,7 @@ namespace Jeopardy
             return answer == string.Empty ? GetAnswer() : answer; 
         }
 
-        public void Score(bool CheckAnswer, int nextScore)
+        public void Score(bool CheckAnswer, int nextScore, string keepAnswer)
         {
             Console.Clear();
             if (CheckAnswer)
@@ -140,6 +145,7 @@ namespace Jeopardy
             else
             {
                 Console.WriteLine("Incorrect!");
+                Console.WriteLine("The correct answer is: " + keepAnswer);
                 score -= nextScore;
             }
             Console.WriteLine("Your score is: " + score);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace Jeopardy
 {
@@ -10,9 +9,11 @@ namespace Jeopardy
         protected string[] keepCategory = new string[6];
         protected string [] columns = null; 
         protected string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty, keepAnswer;
+        public int amountQuestions = 1;
+        public int[] keepPoints = new int[10];
         Random random = new Random();
 
-        public string[] GetData(int round, int points)
+        public string[] GetData(int round)
         {
             var randomLine = 1;
             bool validLine = false;
@@ -36,7 +37,6 @@ namespace Jeopardy
 
                             if (columns[0] == round.ToString() && !keepCategory.Contains(columns[3])) // Kollar om column[0] i raden är = round och så att kategorin inte tidigare har valts.
                             {
-                                Console.WriteLine(columns[3]);
                                 keepCategory[i] = columns[3]; // Sparar kategorierna i []keepCategory så att när jag tillkallar GetQuestion() kan jag leta efter kategorin som valdes av användaren.
                                 validLine = true;
                                 break;
@@ -52,30 +52,34 @@ namespace Jeopardy
             return keepCategory;
         }
 
-        public void GetPoints(int round, int[]Input, int pos)
+        public int GetPoints(int round, int[]Input, int pos)
         {
             using (StreamReader sr = File.OpenText(path))
             {
+                Array.Clear(keepPoints, 0, keepPoints.Length); // Rensar []keepPoints så att när nästa kategori väljs ligger det inte kvar poäng som valda inputs.
+                amountQuestions = 0; // sätter amountQuestions till 0 så att den den inte sparar antal frågor från senast inladdade kategori.
                 while ((lines = sr.ReadLine()) != null)
                 {
                     columns = lines.Split("\t");
-
-                    if (columns[0] == round.ToString() && columns[3] == keepCategory[Input[pos - 1] - 1].ToString())
+                    if (columns[0] == round.ToString() && columns[3] == keepCategory[Input[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1]))) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut. 
                     {
                         Console.WriteLine(columns[1]);
+                        keepPoints[amountQuestions] = int.Parse(columns[1]);
+                        amountQuestions++;
                     }
                 }
             }
+            return amountQuestions;
         }
 
-        public void GetQuestion(int[] Input, int count)
+        public void GetQuestion(int[] Input, int pos)
         {
             using (StreamReader sr = File.OpenText(path))
             {
                 while ((lines = sr.ReadLine()) != null)
                 {
                     columns = lines.Split("\t");
-                    if (columns[3] == keepCategory[Input[count - 2]-1].ToString() && Input[count - 1].ToString() == columns[1]) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
+                    if (columns[3] == keepCategory[Input[pos - 2]-1].ToString() && Input[pos - 1].ToString() == columns[1]) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
                     {
                         Console.WriteLine(columns[5]);
                         keepAnswer = columns[6];
@@ -89,11 +93,11 @@ namespace Jeopardy
         {
             if (keepAnswer.ToLower() == answer.ToLower())
             {
-                input.Score(true, pointsInput[count - 1]);
+                input.Score(true, pointsInput[count - 1], keepAnswer);
             }
             else
             {
-                input.Score(false, pointsInput[count - 1]);
+                input.Score(false, pointsInput[count - 1], keepAnswer);
             }
         }
     }
