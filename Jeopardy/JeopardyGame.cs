@@ -19,14 +19,14 @@ namespace Jeopardy
             }
             else if(round == 2)
             {
-                Console.WriteLine("\nRound 2 Lets go again!");
+                Console.WriteLine("Round 2 Lets go again!");
             }
         }
          public int[] UserInput(int round, int[] Input)
          {
             bool input;
             Console.WriteLine("------------------------------");
-            Console.Write("Select a number between (1-6): ");
+            Console.Write("Select a category (1-6): ");
 
             do
             {
@@ -93,7 +93,7 @@ namespace Jeopardy
                         if (Input[i] == category && Input[i + 1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
                         {
                             Console.WriteLine("Please choose a question that hasn't already been selected");
-                            points = 0; // Lite fulhack men sätter round till 5 så att else körs och man måste välja om poäng
+                            points = 0; // Lite fulhack men sätter points till 0 så att else körs och man måste välja om poäng
                         }
                     }
 

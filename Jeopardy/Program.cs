@@ -16,24 +16,26 @@ namespace Jeopardy
 
             for (int i = 0; i <= 3; i++)
             {
-                string[] KeepCategory = round1.GetChoices(round, points); // Tillkallar en metod från objektet och skickar med startreferenser i parametern. Tilldelar en string array värdet av metoden
+                string[] keepCategory = round1.GetData(round, points); // Tillkallar en metod från objektet och skickar med startreferenser i parametern. Tilldelar []keepCategory det som retuneras av metoden
 
                 for (int j = 0; j <= 16; j++)
                 {
-                    if (j > 0)
+                    if (j > 0) // ser till så att kategorierna skrivs ut varje gång man väljer en ny fråga.(första gången skrivs de ut i JeopardyQuestions)
                     {
-                        for (int k = 0; k < KeepCategory.Length; k++)
+                        for (int k = 0; k < keepCategory.Length; k++)
                         {
-                            Console.WriteLine(KeepCategory[k]);
+                            Console.WriteLine(keepCategory[k]);
                         }
                     }
 
-                    int[] KeepInput = input.UserInput(round, Input); // Tillkallar en metod från objeketet och skicker med en startreferens i parametern. Tilldelar en string array värdet av metoden
-                    Input = KeepInput;
+                    //round1.GetPoints(Input, Input.count);
+
+                    int[] keepInput = input.UserInput(round, Input); // Tillkallar en metod från objeketet och skicker med en startreferens i parametern. Tilldelar en string array värdet av metoden
+                    Input = keepInput; // ser till så att input i metoden innehåller de tidigare lagrade inputsen.
 
                     round1.GetQuestion(Input, input.count); // Tillkallar ytterligare en metod från objektet och skickar med de 2 lagrade arrayerna i parametern.
 
-                    round1.CheckAnswer(JeopardyGame.GetAnswer(), KeepInput, input, input.count);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
+                    round1.CheckAnswer(JeopardyGame.GetAnswer(), keepInput, input, input.count);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
                 }
                 round++;
                 points += 100;
@@ -47,9 +49,9 @@ namespace Jeopardy
 // Fixa så att inte jag initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
 // Fixa så att JeopardyQuestions ärver variabler från JeopardyGame så att det inte behövs skickas tillbaks och därmed mindre och snyggare kod
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?
-// Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
 
 //TODO Visuellt:
 // Fixa så att man ser ifall frågan har valts och ifall kategorin har slut på ovalda frågor
 // Fixa så svar inte kräver bindestreck och apostrofer.
 // Försöka göra texten mer enkel att läsa
+// Fixa så att när man väljer en kategori så svarar consolen med du valde den här kategorin
