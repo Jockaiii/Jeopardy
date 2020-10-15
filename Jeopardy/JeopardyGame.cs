@@ -29,9 +29,9 @@ namespace Jeopardy
             }
         }
 
-        public void CategoryInput(int round, int[] Input, JeopardyQuestions questions)
+        public void CategoryInput(int[] userInput, JeopardyQuestions questions)
         {
-            bool input;
+            bool inputCheck;
             Console.WriteLine("------------------------------");
             Console.Write("Select a category (1-6): ");
 
@@ -42,47 +42,48 @@ namespace Jeopardy
                     maxQuestions = 0;
                     category = int.Parse(Console.ReadLine());
 
-                    for (int i = 0; i < Input.Length; i++)
+                    for (int i = 0; i < userInput.Length; i++)
                     {
-                        if (Input[i] == category)
+                        if (userInput[i] == category) // Kollar om kategorin redan finns lagrad i []Input. Och om den gör det så ökar maxQuestions +1. 
                         {
                             maxQuestions++;
                         }
                     }
 
-                    if (maxQuestions == questions.amountQuestions)
-                    {
+                    if (maxQuestions == questions.amountQuestions) // Om kategorin finns sparad i []Input lika många gånger som det finns frågor så betyder det att alla frågor är valda och kategorin är tömd på fira frågor.
+                    {                                              // Då får användaren helt enkelt välja en annan kategori. Om categoriesDepleted når 7 kommer rundan avslutas i Program.cs
                         Console.WriteLine("Please select a non depleted category");
                         Console.Write("Select a number between 1-6: ");
                         categoriesDepleted++;
                         category = 7;
-                        input = false;
+                        inputCheck = false;
                     }
                     else if (category > 0 && category <= 6)
                     {
-                        Input[pos] = category;
-                        input = true;
+                        userInput[pos] = category;
+                        inputCheck = true;
                     }
                     else
                     {
                         Console.Write("Select a number between 1-6: ");
-                        input = false;
+                        inputCheck = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     Console.Write("Select a number between 1-6: ");
-                    input = false;
+                    inputCheck = false;
                 }
-            } while (input == false);
+            } while (inputCheck == false);
 
+            Console.WriteLine("Category: " + questions.keepCategory[category - 1]);
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
         }
 
-        public void PointsInput(int round, int[] Input, JeopardyQuestions questions)
+        public void PointsInput(int[] userInput, JeopardyQuestions questions)
         {
-            bool input;
+            bool inputCheck;
             Console.WriteLine("------------------------------");
             Console.Write("Select amount of points: ");
 
@@ -94,7 +95,7 @@ namespace Jeopardy
 
                     for (int i = 0; i < pos; i++)
                     {
-                        if (Input[i] == category && Input[i+1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
+                        if (userInput[i] == category && userInput[i+1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
                         {
                             Console.WriteLine("Please select a question that hasn't already been selected");
                             points = 0; // Lite fulhack men sätter points till 0 så att else körs och man måste välja om poäng
@@ -105,25 +106,25 @@ namespace Jeopardy
                     {
                         Console.WriteLine("Please select a valid number");
                         Console.Write("Select amount of points: ");
-                        input = false;
+                        inputCheck = false;
                     }
                     else if (questions.keepPoints.Contains(points))
                     {
-                        Input[pos] = points;
-                        input = true;
+                        userInput[pos] = points;
+                        inputCheck = true;
                     }
                     else
                     {
-                        input = false;
+                        inputCheck = false;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     Console.Write("Select amount of points: ");
-                    input = false;
+                    inputCheck = false;
                 }
-            } while (input == false);
+            } while (inputCheck == false);
             
             pos++;
         }
