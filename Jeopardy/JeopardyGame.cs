@@ -34,6 +34,10 @@ namespace Jeopardy
             for (int i = 0; i < questions.keepCategory.Length; i++)
             {
                 Console.WriteLine(i + 1 + ": " + questions.keepCategory[i]);
+                if (questions.keepCategory[i] == categoriesDepleted.ToString())
+                {
+
+                }
             }
         }
 
@@ -43,6 +47,11 @@ namespace Jeopardy
             {
                 Console.WriteLine(questions.keepPoints[i]);
             }
+        }
+
+        public void PrintQuestion(JeopardyQuestions questions)
+        {
+            Console.WriteLine(questions.keepAnswer);
         }
 
         public void CategoryInput(int[] userInput, JeopardyQuestions questions)

@@ -28,6 +28,7 @@ namespace Jeopardy
                     game.PointsInput(userInput, questions); // Tillkallar en metod som tar in användarens val an poäng
 
                     questions.GetQuestion(userInput, game.pos); // Tillkallar ytterligare en metod från objektet och skickar med inputs och en pos refererare.
+                    game.PrintQuestion(questions); // Tillkallar en metod som skriver ut den hämtade frågan.
                     questions.CheckAnswer(JeopardyGame.GetAnswer(), userInput, game, game.pos);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
 
                 } while (game.categoriesDepleted <= 6); // Forsätter be användaren om kategori, poäng, frågor och svar tills alla kategorierna är tomma på lediga frågor
