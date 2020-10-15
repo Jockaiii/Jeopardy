@@ -29,6 +29,22 @@ namespace Jeopardy
             }
         }
 
+        public void PrintCategories(JeopardyQuestions questions) 
+        {
+            for (int i = 0; i < questions.keepCategory.Length; i++)
+            {
+                Console.WriteLine(i + 1 + ": " + questions.keepCategory[i]);
+            }
+        }
+
+        public void PrintPoints(JeopardyQuestions questions)
+        {
+            for (int i = 0; i < questions.keepPoints.Length; i++)
+            {
+                Console.WriteLine(questions.keepPoints[i]);
+            }
+        }
+
         public void CategoryInput(int[] userInput, JeopardyQuestions questions)
         {
             bool inputCheck;

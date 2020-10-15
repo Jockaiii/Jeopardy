@@ -61,7 +61,6 @@ namespace Jeopardy
                 columns = lines.Split("\t");
                 if (columns[0] == round.ToString() && columns[3] == keepCategory[userInput[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1]))) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut. 
                 {
-                    Console.WriteLine(columns[1]);
                     keepPoints[amountQuestions] = int.Parse(columns[1]);
                     amountQuestions++;
                 }

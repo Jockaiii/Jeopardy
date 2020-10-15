@@ -16,18 +16,16 @@ namespace Jeopardy
             {
                 JeopardyGame.StartRound(round);
 
-                questions.GetCategory(round); // Tillkallar en metod från objektet och skickar med den nuvarande rundan.
+                questions.GetCategory(round); // Tillkallar en metod som slumpar och skriver ut 6 kategorier.
 
                 do
                 {
-                    for (int j = 0; j < questions.keepCategory.Length; j++) // Skriver ut de slumpvalda kategorierna
-                    {
-                        Console.WriteLine( j + 1 + ": " + questions.keepCategory[j]);
-                    }
+                    game.PrintCategories(questions); // Tillkallar en metod som skriver ut kategorierna
                     game.CategoryInput(userInput, questions); // Tillkallar en metod från objeketet och skicker med en startreferens i parametern. 
 
-                    questions.GetPoints(round, userInput, game.pos);
-                    game.PointsInput(userInput, questions);
+                    questions.GetPoints(round, userInput, game.pos); // Hämtar poängen för frågorna.
+                    game.PrintPoints(questions); // Tillkallar en metod som skriver ut poängen
+                    game.PointsInput(userInput, questions); // Tillkallar en metod som tar in användarens val an poäng
 
                     questions.GetQuestion(userInput, game.pos); // Tillkallar ytterligare en metod från objektet och skickar med inputs och en pos refererare.
                     questions.CheckAnswer(JeopardyGame.GetAnswer(), userInput, game, game.pos);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
