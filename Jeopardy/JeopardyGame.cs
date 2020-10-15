@@ -41,7 +41,14 @@ namespace Jeopardy
         {
             for (int i = 0; i < questions.keepPoints.Length; i++)
             {
-                Console.WriteLine(questions.keepPoints[i]);
+                if (questions.keepPoints[i] == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine(questions.keepPoints[i]);
+                }
             }
         }
 
