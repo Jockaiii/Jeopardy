@@ -14,7 +14,7 @@ namespace Jeopardy
 
             for (int i = 0; i <= 3; i++) // Kör all kod 3 gånger för 3 rundor
             {
-                JeopardyGame.StartRound(round);
+                JeopardyGame.StartRound(round, game);
 
                 questions.GetCategory(round); // Tillkallar en metod som slumpar och skriver ut 6 kategorier.
 

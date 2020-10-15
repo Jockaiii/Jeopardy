@@ -8,7 +8,7 @@ namespace Jeopardy
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
 
-        public static void StartRound(int round)
+        public static void StartRound(int round, JeopardyGame game)
         {
             if (round == 1)
             {
@@ -19,12 +19,12 @@ namespace Jeopardy
             }
             else if(round == 2)
             {
-                Console.Clear();
+                game.Score(true, 0, null);
                 Console.WriteLine("Round 2 Lets go again!");
             }
             else
             {
-                Console.Clear();
+                game.Score(true, 0, null);
                 Console.WriteLine("Round 3!");
             }
         }
@@ -47,7 +47,7 @@ namespace Jeopardy
 
         public void PrintQuestion(JeopardyQuestions questions)
         {
-            Console.WriteLine(questions.keepAnswer);
+            Console.WriteLine(questions.keepQuestion);
         }
 
         public void CategoryInput(int[] userInput, JeopardyQuestions questions)

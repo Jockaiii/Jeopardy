@@ -8,7 +8,7 @@ namespace Jeopardy
     {
         public string[] keepCategory = new string[6];
         protected string [] columns = null; 
-        public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty, keepAnswer;
+        public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty,keepQuestion, keepAnswer;
         public int amountQuestions = 1;
         public int[] keepPoints = new int[10];
         readonly Random random = new Random();
@@ -75,21 +75,22 @@ namespace Jeopardy
                 columns = lines.Split("\t");
                 if (columns[3] == keepCategory[userInput[pos - 2] - 1].ToString() && userInput[pos - 1].ToString() == columns[1]) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
                 {
+                    keepQuestion = columns[5];
                     keepAnswer = columns[6];
                     break;
                 }
             }
         }
 
-        public void CheckAnswer(string answer, int[] pointsInput, JeopardyGame input, int count)
+        public void CheckAnswer(string answer, int[] pointsInput, JeopardyGame game, int pos)
         {
             if (keepAnswer.ToLower() == answer.ToLower())
             {
-                input.Score(true, pointsInput[count - 1], keepAnswer);
+                game.Score(true, pointsInput[pos - 1], keepAnswer);
             }
             else
             {
-                input.Score(false, pointsInput[count - 1], keepAnswer);
+                game.Score(false, pointsInput[pos - 1], keepAnswer);
             }
         }
     }
