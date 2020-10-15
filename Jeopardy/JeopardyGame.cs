@@ -34,10 +34,6 @@ namespace Jeopardy
             for (int i = 0; i < questions.keepCategory.Length; i++)
             {
                 Console.WriteLine(i + 1 + ": " + questions.keepCategory[i]);
-                if (questions.keepCategory[i] == categoriesDepleted.ToString())
-                {
-
-                }
             }
         }
 
