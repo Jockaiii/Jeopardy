@@ -78,12 +78,13 @@ namespace Jeopardy
                         }
                     }
 
-                    if (maxQuestions == questions.amountQuestions) // Om kategorin finns sparad i []Input lika många gånger som det finns frågor så betyder det att alla frågor är valda och kategorin är tömd på fira frågor.
+                    if (maxQuestions == 5) // Om kategorin finns sparad i []Input lika många gånger som det finns frågor så betyder det att alla frågor är valda och kategorin är tömd på fira frågor.
                     {                                              // Då får användaren helt enkelt välja en annan kategori. Om categoriesDepleted når 7 kommer rundan avslutas i Program.cs
                         Console.WriteLine("Please select a non depleted category");
                         Console.Write("Select a number between 1-6: ");
                         categoriesDepleted++;
                         category = 7;
+                        questions.keepCategory[category - 1] += "\tDEPLETED";
                         inputCheck = false;
                     }
                     else if (category > 0 && category <= 6)
@@ -123,10 +124,11 @@ namespace Jeopardy
 
                     for (int i = 0; i < pos; i++)
                     {
-                        if (userInput[i] == category && userInput[i+1] == points) // kollar igenom []Input efter ifall category && points redan finns lagrad.
+                        if (userInput[i] == category && userInput[i+1] == points) // kollar igenom []userInput efter ifall category && points redan finns lagrad.
                         {
                             Console.WriteLine("Please select a question that hasn't already been selected");
                             points = 0; // Lite fulhack men sätter points till 0 så att else körs och man måste välja om poäng
+                            break;
                         }
                     }
 

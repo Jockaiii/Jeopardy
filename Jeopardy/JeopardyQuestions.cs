@@ -10,12 +10,13 @@ namespace Jeopardy
         protected string [] columns = null; 
         public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty,keepQuestion, keepAnswer;
         public int amountQuestions = 1;
-        public int[] keepPoints = new int[10];
+        public int[] keepPoints = new int[5];
         readonly Random random = new Random();
 
-        public void GetCategory(int round)
+        public void GetCategory(int [] userInput, int round)
         {
             bool validLine = false;
+            Array.Clear(userInput, 0, userInput.Length); // Rensar []userInput från tidigare rundans inputs.
 
             for (int i = 0; i < 6; i++) // Slumpar en rad 6 gånger och sparar kategorierna i de randerna och skickar dem till Program.cs för att skrivas ut.
             {
@@ -34,7 +35,7 @@ namespace Jeopardy
                             sr.ReadLine();
                         }
 
-                        if (columns[0] == round.ToString() && !keepCategory.Contains(columns[3])) // Kollar om column[0] i raden är = round och så att kategorin inte tidigare har valts.
+                        if (columns[0] == round.ToString() && !keepCategory.Contains(columns[3])) // Kollar om column[0] i raden är = round och så att kategorin inte tidigare har valts. 
                         {
                             keepCategory[i] = columns[3]; // Sparar kategorierna i []keepCategory
                             validLine = true;
@@ -53,16 +54,15 @@ namespace Jeopardy
         {
             using StreamReader sr = File.OpenText(path);
 
-            Array.Clear(keepPoints, 0, keepPoints.Length); // Rensar []keepPoints så att när nästa kategori väljs ligger det inte kvar poäng som valda inputs.
-            amountQuestions = 0; // sätter amountQuestions till 0 så att den den inte sparar antal frågor från senast inladdade kategori.
+            int count = 0;
 
             while ((lines = sr.ReadLine()) != null)
             {
                 columns = lines.Split("\t");
-                if (columns[0] == round.ToString() && columns[3] == keepCategory[userInput[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1]))) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut. 
+                if (columns[0] == round.ToString() && columns[3] == keepCategory[userInput[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1])) && keepPoints[4] == 0) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut.
                 {
-                    keepPoints[amountQuestions] = int.Parse(columns[1]);
-                    amountQuestions++;
+                    keepPoints[count] = int.Parse(columns[1]);
+                    count++;
                 }
             }
         }

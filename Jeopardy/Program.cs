@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace Jeopardy
+﻿namespace Jeopardy
 { 
     class Program
     {
         static void Main(string[] args)
         {
             int round = 1; // Startar på runda 1
-            int[] userInput = new int[100]; // Alla lagrade inputs från användaren. kategorier och antal poäng. Antal kan variera så har 100 för säkerhets skull.
+            int[] userInput = new int[60]; // Alla lagrade inputs från användaren. 6 kategorier och 5 frågor / kategori. 2 inputs per fråga = 60
 
             JeopardyQuestions questions = new JeopardyQuestions(); // instansierar ett nytt objekt av JeopardyQuestions()
             JeopardyGame game = new JeopardyGame(); // instansierar ett nytt objekt av JeopardyGame()
@@ -16,7 +14,7 @@ namespace Jeopardy
             {
                 JeopardyGame.StartRound(round, game);
 
-                questions.GetCategory(round); // Tillkallar en metod som slumpar och skriver ut 6 kategorier.
+                questions.GetCategory(userInput, round); // Tillkallar en metod som slumpar och skriver ut 6 kategorier.
 
                 do
                 {
