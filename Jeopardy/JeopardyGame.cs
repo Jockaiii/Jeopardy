@@ -8,16 +8,21 @@ namespace Jeopardy
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
 
+        static string playerName;
+
         public static void StartRound(int round, JeopardyGame game)
         {
             if (round == 1)
             {
-                Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
-                Console.WriteLine("Please select your category and amount of points.");
+                Console.Write("Enter playername: ");
+                playerName = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("--------------------------------------------------------------");
+                Console.WriteLine("(Please select your category and amount of points.");
                 Console.WriteLine("--------------------------------------------------------------");
             }
-            else if(round == 2)
+            else if (round == 2)
             {
                 game.Score(true, 0, null);
                 Console.WriteLine("Round 2 Lets go again!");
@@ -29,7 +34,7 @@ namespace Jeopardy
             }
         }
 
-        public void PrintCategories(JeopardyQuestions questions) 
+        public void PrintCategories(JeopardyQuestions questions)
         {
             for (int i = 0; i < questions.keepCategory.Length; i++)
             {
@@ -124,7 +129,7 @@ namespace Jeopardy
 
                     for (int i = 0; i < pos; i++)
                     {
-                        if (userInput[i] == category && userInput[i+1] == points) // kollar igenom []userInput efter ifall category && points redan finns lagrad.
+                        if (userInput[i] == category && userInput[i + 1] == points) // kollar igenom []userInput efter ifall category && points redan finns lagrad.
                         {
                             Console.WriteLine("Please select a question that hasn't already been selected");
                             points = 0; // Lite fulhack men sätter points till 0 så att else körs och man måste välja om poäng
@@ -134,7 +139,6 @@ namespace Jeopardy
 
                     if (points == 0)
                     {
-                        Console.WriteLine("Please select a valid number");
                         Console.Write("Select amount of points: ");
                         inputCheck = false;
                     }
@@ -145,6 +149,7 @@ namespace Jeopardy
                     }
                     else
                     {
+                        Console.Write("Please select a valid number:"); // Ändrade plats på denna, så att man får ett svar när man anger fel antal poäng.
                         inputCheck = false;
                     }
                 }
@@ -155,7 +160,7 @@ namespace Jeopardy
                     inputCheck = false;
                 }
             } while (inputCheck == false);
-            
+
             pos++;
         }
 
@@ -163,7 +168,7 @@ namespace Jeopardy
         {
             Console.Write("Input your answer: ");
             string answer = Console.ReadLine();
-            return answer == string.Empty ? GetAnswer() : answer; 
+            return answer == string.Empty ? GetAnswer() : answer;
         }
 
         public void Score(bool CheckAnswer, int nextScore, string keepAnswer)
@@ -173,14 +178,22 @@ namespace Jeopardy
             {
                 Console.WriteLine("Correct!");
                 score += nextScore;
+                Console.WriteLine("Press 'Enter' to continue the game.");
+                Console.ReadLine();
+                Console.Clear();
             }
             else
             {
                 Console.WriteLine("Incorrect!");
-                Console.WriteLine("The correct answer is: " + keepAnswer);
+                Console.WriteLine("The correct answer is: " + keepAnswer, playerName);
                 score -= nextScore;
+                Console.WriteLine("Press 'Enter' to continue the game.");
+                Console.ReadLine();
+                Console.Clear();
             }
-            Console.WriteLine("Your score is: " + score);
+            Console.WriteLine("--------------------------");
+            Console.WriteLine("Your score is: " + score, playerName); // Hade varit coolt att se ens namn och poäng
+            Console.WriteLine("--------------------------");
         }
     }
 }
