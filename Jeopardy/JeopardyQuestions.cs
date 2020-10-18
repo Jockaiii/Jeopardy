@@ -10,7 +10,7 @@ namespace Jeopardy
         protected string [] columns = null; 
         public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", rows = string.Empty, keepQuestion, keepAnswer;
         public int[] keepPoints = new int[5];
-        public int missingQuestion; // Sätter amountQuestions till 1 för att inte CategoryInput ska sätta kategorin till depleted direkt
+        public int missingQuestion;
         readonly Random random = new Random();
 
         public void GetCategory(int [] userInput, int round)
@@ -70,9 +70,7 @@ namespace Jeopardy
             for (int i = 0; i < keepPoints.Length; i++) // Ifall en kategori har mindre än 5 frågor så måste jag ha något som tar bort antal frågor som förvantas i en kateogri i JeopardyGame.cs
             {
                 if (keepPoints[i] == 0)
-                {
-                    missingQuestion++;
-                }
+                missingQuestion++;
             }
         }
 

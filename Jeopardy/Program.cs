@@ -37,7 +37,6 @@
 }
 // TODO Bakgrund:
 // Fixa så att ifall man väljer en depleted kategori så adderas inte depletedCategories med 1. utan endast när man har valt alla frågorna i en kategori.
-// Fixa att ifall en kategori har mindre än 5 frågor så fungerar programmet ändå.
 // Fixa så att man måste lägga till en fråga med svaret
 // Fixa så att jag inte initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?
