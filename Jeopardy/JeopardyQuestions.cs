@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -70,10 +71,10 @@ namespace Jeopardy
             for (int i = 0; i < keepPoints.Length; i++) // Ifall en kategori har mindre än 5 frågor så måste jag ha något som tar bort antal frågor som förvantas i en kateogri i JeopardyGame.cs
             {
                 if (keepPoints[i] == 0)
-                missingQuestion++;
+                    missingQuestion++;
             }
         }
-
+            
         public void GetQuestion(int[] userInput, int pos)
         {
             using StreamReader sr = File.OpenText(path);

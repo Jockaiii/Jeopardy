@@ -13,6 +13,7 @@ namespace Jeopardy
         public static void StartRound(int round, JeopardyGame game)
         {
             game.categoriesDepleted = 0; // Sätter categoriesDeplted till 0 vid start av ny runda.
+
             if (round == 1)
             {
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
