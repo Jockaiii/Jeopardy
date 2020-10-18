@@ -16,20 +16,20 @@
 
                 questions.GetCategory(userInput, round); // Tillkallar en metod som slumpar och skriver ut 6 kategorier.
 
-                do
+                while (game.categoriesDepleted <= 6) // Forsätter be användaren om kategori, poäng, frågor och svar tills alla kategorierna är tomma på lediga frågor
                 {
                     game.PrintCategories(questions); // Tillkallar en metod som skriver ut kategorierna
                     game.CategoryInput(userInput, questions); // Tillkallar en metod från objeketet och skicker med en startreferens i parametern. 
 
                     questions.GetPoints(round, userInput, game.pos); // Hämtar poängen för frågorna.
-                    game.PrintPoints(questions); // Tillkallar en metod som skriver ut poängen
+                    game.PrintPoints(questions, userInput); // Tillkallar en metod som skriver ut poängen
                     game.PointsInput(userInput, questions); // Tillkallar en metod som tar in användarens val an poäng
 
                     questions.GetQuestion(userInput, game.pos); // Tillkallar ytterligare en metod från objektet och skickar med inputs och en pos refererare.
                     game.PrintQuestion(questions); // Tillkallar en metod som skriver ut den hämtade frågan.
                     questions.CheckAnswer(JeopardyGame.GetAnswer(), userInput, game, game.pos);  // Kollar ifall svaret är korrekt och tilldelar poäng ifall det stämmer. och tar bort poäng ifall svaret det är inkorrekt
 
-                } while (game.categoriesDepleted <= 6); // Forsätter be användaren om kategori, poäng, frågor och svar tills alla kategorierna är tomma på lediga frågor
+                } 
 
                 round++; // ökar round så att jag kan hämta kategorier, poäng, inputs och svar på nästa runda.
             }
@@ -37,7 +37,6 @@
     }
 }
 // TODO Bakgrund:
-// Fixa så att inte frågor från upprepande kategori skrivs ut.
 // Fixa så att man måste lägga till en fråga med svaret
 // Fixa så att jag inte initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?

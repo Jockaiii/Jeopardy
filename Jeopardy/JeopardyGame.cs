@@ -37,24 +37,36 @@ namespace Jeopardy
             }
         }
 
-        public void PrintPoints(JeopardyQuestions questions)
+        public void PrintPoints(JeopardyQuestions questions, int[] userInput)
         {
             for (int i = 0; i < questions.keepPoints.Length; i++)
             {
-                if (questions.keepPoints[i] == 0)
+                //for (int k = 0; k < questions.keepPoints.Length; k++) // Tar bort frågor som redan är valda. Men fungerar inte riktigt eftersom många kategorier har samma poängval.
+                //{                                                     // Hade fungerat om jag sparade userInputs för varje kategori.
+                //    for (int j = 1; j < userInput.Length; j += 2)
+                //    {
+                //        if (userInput[j - 1] == category && questions.keepPoints[k] == userInput[j])
+                //        {
+                //            questions.keepPoints[k] = 123;
+                //            break;
+                //        }
+                //    }
+                //}
+
+                if (questions.keepPoints[i] == 123)
                 {
-                    break;
+
                 }
                 else
                 {
                     Console.WriteLine(questions.keepPoints[i]);
                 }
-            }
+            }           
         }
 
         public void PrintQuestion(JeopardyQuestions questions)
         {
-            Console.WriteLine(questions.keepQuestion);
+            Console.WriteLine("Question: " + questions.keepQuestion);
         }
 
         public void CategoryInput(int[] userInput, JeopardyQuestions questions)
@@ -84,7 +96,6 @@ namespace Jeopardy
                         Console.Write("Select a number between 1-6: ");
                         categoriesDepleted++;
                         category = 7;
-                        questions.keepCategory[category - 1] += "\tDEPLETED";
                         inputCheck = false;
                     }
                     else if (category > 0 && category <= 6)
@@ -107,6 +118,8 @@ namespace Jeopardy
             } while (inputCheck == false);
 
             Console.WriteLine("Category: " + questions.keepCategory[category - 1]);
+            Console.WriteLine("------------------------------");
+
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
         }
 
@@ -124,7 +137,7 @@ namespace Jeopardy
 
                     for (int i = 0; i < pos; i++)
                     {
-                        if (userInput[i] == category && userInput[i+1] == points) // kollar igenom []userInput efter ifall category && points redan finns lagrad.
+                        if (userInput[i] == category && userInput[i + 1] == points) // kollar igenom []userInput efter ifall category && points redan finns lagrad.
                         {
                             Console.WriteLine("Please select a question that hasn't already been selected");
                             points = 0; // Lite fulhack men sätter points till 0 så att else körs och man måste välja om poäng
@@ -134,7 +147,6 @@ namespace Jeopardy
 
                     if (points == 0)
                     {
-                        Console.WriteLine("Please select a valid number");
                         Console.Write("Select amount of points: ");
                         inputCheck = false;
                     }
@@ -145,6 +157,7 @@ namespace Jeopardy
                     }
                     else
                     {
+                        Console.WriteLine("Please select a valid number");
                         inputCheck = false;
                     }
                 }
@@ -155,7 +168,10 @@ namespace Jeopardy
                     inputCheck = false;
                 }
             } while (inputCheck == false);
-            
+
+            Console.WriteLine("For " + points + " points:");
+            Console.WriteLine("------------------------------");
+
             pos++;
         }
 
@@ -181,6 +197,7 @@ namespace Jeopardy
                 score -= nextScore;
             }
             Console.WriteLine("Your score is: " + score);
+            Console.WriteLine("------------------------------");
         }
     }
 }

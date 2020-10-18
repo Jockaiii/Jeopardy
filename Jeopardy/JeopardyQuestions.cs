@@ -9,7 +9,6 @@ namespace Jeopardy
         public string[] keepCategory = new string[6];
         protected string [] columns = null; 
         public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty,keepQuestion, keepAnswer;
-        public int amountQuestions = 1;
         public int[] keepPoints = new int[5];
         readonly Random random = new Random();
 
@@ -59,7 +58,7 @@ namespace Jeopardy
             while ((lines = sr.ReadLine()) != null)
             {
                 columns = lines.Split("\t");
-                if (columns[0] == round.ToString() && columns[3] == keepCategory[userInput[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1])) && keepPoints[4] == 0) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut.
+                if (columns[0] == round.ToString() && columns[3] == keepCategory[userInput[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1])) && keepPoints[4] == 0) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut. och att ifall en femte fråga ha lagrats så ska inga mer lagras.
                 {
                     keepPoints[count] = int.Parse(columns[1]);
                     count++;
