@@ -66,11 +66,18 @@ namespace Jeopardy
                         }
                     }
 
-                    if (maxQuestions == 5 - questions.missingQuestion)
+                    if (questions.keepCategory[category - 1] == "Depleted")
+                    {
+                        Console.WriteLine("Please select a non depleted category");
+                        Console.Write("Select a number between 1-6: ");
+                        inputCheck = false;
+                    }
+                    else if (maxQuestions == 5 - questions.missingQuestion)
                     {
                         Console.WriteLine("Please select a non depleted category");
                         Console.Write("Select a number between 1-6: ");
                         categoriesDepleted++;
+                        questions.keepCategory[category - 1] = "Depleted";
                         category = 7;
                         inputCheck = false;
                     }
