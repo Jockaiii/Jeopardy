@@ -8,16 +8,21 @@ namespace Jeopardy
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
 
+        static string playerName;
+
         public static void StartRound(int round, JeopardyGame game)
         {
             if (round == 1)
             {
-                Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
-                Console.WriteLine("Please select your category and amount of points.");
+                Console.Write("Enter playername: ");
+                playerName = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("--------------------------------------------------------------");
+                Console.WriteLine("(Please select your category and amount of points.");
                 Console.WriteLine("--------------------------------------------------------------");
             }
-            else if(round == 2)
+            else if (round == 2)
             {
                 game.Score(true, 0, null);
                 Console.WriteLine("Round 2 Lets go again!");
@@ -29,7 +34,7 @@ namespace Jeopardy
             }
         }
 
-        public void PrintCategories(JeopardyQuestions questions) 
+        public void PrintCategories(JeopardyQuestions questions)
         {
             for (int i = 0; i < questions.keepCategory.Length; i++)
             {
@@ -179,7 +184,7 @@ namespace Jeopardy
         {
             Console.Write("Input your answer: ");
             string answer = Console.ReadLine();
-            return answer == string.Empty ? GetAnswer() : answer; 
+            return answer == string.Empty ? GetAnswer() : answer;
         }
 
         public void Score(bool CheckAnswer, int nextScore, string keepAnswer)
@@ -193,11 +198,12 @@ namespace Jeopardy
             else
             {
                 Console.WriteLine("Incorrect!");
-                Console.WriteLine("The correct answer is: " + keepAnswer);
+                Console.WriteLine("The correct answer is: " + keepAnswer, playerName);
                 score -= nextScore;
             }
-            Console.WriteLine("Your score is: " + score);
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--------------------------");
+            Console.WriteLine("Your score is: " + score, playerName);
+            Console.WriteLine("--------------------------");
         }
     }
 }

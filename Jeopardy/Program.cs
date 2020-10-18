@@ -1,5 +1,5 @@
 ﻿namespace Jeopardy
-{ 
+{
     class Program
     {
         static void Main(string[] args)
@@ -44,3 +44,4 @@
 //TODO Visuellt:
 // Fixa så att man ser ifall frågan har valts och ifall kategorin har slut på ovalda frågor
 // Fixa så svar inte kräver bindestreck, apostrofer och paranteser. Samt att man inte måste skriva t.ex "an apple". utan bara "apple".
+// Fixa så att namn står med i score. Så istället för Your score is: 100, Så kanske Jockes score is 100 eller nåt sånt. Lite mer personligt.
