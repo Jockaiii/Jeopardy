@@ -12,6 +12,7 @@ namespace Jeopardy
 
         public static void StartRound(int round, JeopardyGame game)
         {
+            game.categoriesDepleted = 0; // Sätter categoriesDeplted till 0 vid start av ny runda.
             if (round == 1)
             {
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
@@ -19,7 +20,7 @@ namespace Jeopardy
                 playerName = Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine("--------------------------------------------------------------");
-                Console.WriteLine("(Please select your category and amount of points.");
+                Console.WriteLine("Please select your category and amount of points.");
                 Console.WriteLine("--------------------------------------------------------------");
             }
             else if (round == 2)
@@ -40,45 +41,14 @@ namespace Jeopardy
             {
                 Console.WriteLine(i + 1 + ": " + questions.keepCategory[i]);
             }
-        }
 
-        public void PrintPoints(JeopardyQuestions questions, int[] userInput)
-        {
-            for (int i = 0; i < questions.keepPoints.Length; i++)
-            {
-                //for (int k = 0; k < questions.keepPoints.Length; k++) // Tar bort frågor som redan är valda. Men fungerar inte riktigt eftersom många kategorier har samma poängval.
-                //{                                                     // Hade fungerat om jag sparade userInputs för varje kategori.
-                //    for (int j = 1; j < userInput.Length; j += 2)
-                //    {
-                //        if (userInput[j - 1] == category && questions.keepPoints[k] == userInput[j])
-                //        {
-                //            questions.keepPoints[k] = 123;
-                //            break;
-                //        }
-                //    }
-                //}
-
-                if (questions.keepPoints[i] == 123)
-                {
-
-                }
-                else
-                {
-                    Console.WriteLine(questions.keepPoints[i]);
-                }
-            }           
-        }
-
-        public void PrintQuestion(JeopardyQuestions questions)
-        {
-            Console.WriteLine("Question: " + questions.keepQuestion);
+            Console.WriteLine("------------------------------");
+            Console.Write("Select a category (1-6): ");
         }
 
         public void CategoryInput(int[] userInput, JeopardyQuestions questions)
         {
             bool inputCheck;
-            Console.WriteLine("------------------------------");
-            Console.Write("Select a category (1-6): ");
 
             do
             {
@@ -87,7 +57,7 @@ namespace Jeopardy
                     maxQuestions = 0;
                     category = int.Parse(Console.ReadLine());
 
-                    for (int i = 0; i < userInput.Length; i++)
+                    for (int i = 0; i < userInput.Length; i += 2)
                     {
                         if (userInput[i] == category) // Kollar om kategorin redan finns lagrad i []Input. Och om den gör det så ökar maxQuestions +1. 
                         {
@@ -95,8 +65,8 @@ namespace Jeopardy
                         }
                     }
 
-                    if (maxQuestions == 5) // Om kategorin finns sparad i []Input lika många gånger som det finns frågor så betyder det att alla frågor är valda och kategorin är tömd på fira frågor.
-                    {                                              // Då får användaren helt enkelt välja en annan kategori. Om categoriesDepleted når 7 kommer rundan avslutas i Program.cs
+                    if (maxQuestions == 5 - questions.missingQuestion)
+                    {
                         Console.WriteLine("Please select a non depleted category");
                         Console.Write("Select a number between 1-6: ");
                         categoriesDepleted++;
@@ -128,11 +98,39 @@ namespace Jeopardy
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
         }
 
+        public void PrintPoints(JeopardyQuestions questions, int[] userInput)
+        {
+            for (int i = 0; i < questions.keepPoints.Length; i++)
+            {
+                //for (int k = 0; k < questions.keepPoints.Length; k++) // Tar bort frågor som redan är valda. Men fungerar inte riktigt eftersom många kategorier har samma poängval.
+                //{                                                     // Hade fungerat om jag sparade en userInput för varje kategori.
+                //    for (int j = 1; j < userInput.Length; j += 2)
+                //    {
+                //        if (userInput[j - 1] == category && questions.keepPoints[k] == userInput[j])
+                //        {
+                //            questions.keepPoints[k] = 123;
+                //            break;
+                //        }
+                //    }
+                //}
+
+                if (questions.keepPoints[i] == 0)
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine(questions.keepPoints[i]);
+                }
+            }
+
+            Console.WriteLine("------------------------------");
+            Console.Write("Select amount of points: ");
+        }
+
         public void PointsInput(int[] userInput, JeopardyQuestions questions)
         {
             bool inputCheck;
-            Console.WriteLine("------------------------------");
-            Console.Write("Select amount of points: ");
 
             do
             {
@@ -163,6 +161,7 @@ namespace Jeopardy
                     else
                     {
                         Console.WriteLine("Please select a valid number");
+                        Console.Write("Select amount of points: ");
                         inputCheck = false;
                     }
                 }
@@ -174,17 +173,20 @@ namespace Jeopardy
                 }
             } while (inputCheck == false);
 
-            Console.WriteLine("For " + points + " points:");
-            Console.WriteLine("------------------------------");
-
             pos++;
         }
 
-        static public string GetAnswer()
+        public void PrintQuestion(JeopardyQuestions questions)
         {
-            Console.Write("Input your answer: ");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("Question for " + points + " points: " + questions.keepQuestion);
+        }
+
+        static public string AnswerInput()
+        {
+            Console.WriteLine("Input your answer: ");
             string answer = Console.ReadLine();
-            return answer == string.Empty ? GetAnswer() : answer;
+            return answer == string.Empty ? AnswerInput() : answer;
         }
 
         public void Score(bool CheckAnswer, int nextScore, string keepAnswer)
@@ -202,7 +204,7 @@ namespace Jeopardy
                 score -= nextScore;
             }
             Console.WriteLine("--------------------------");
-            Console.WriteLine("Your score is: " + score, playerName);
+            Console.WriteLine(playerName + " your score is: " + score);
             Console.WriteLine("--------------------------");
         }
     }

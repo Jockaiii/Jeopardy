@@ -8,28 +8,30 @@ namespace Jeopardy
     {
         public string[] keepCategory = new string[6];
         protected string [] columns = null; 
-        public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", lines = string.Empty,keepQuestion, keepAnswer;
+        public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", rows = string.Empty, keepQuestion, keepAnswer;
         public int[] keepPoints = new int[5];
+        public int missingQuestion; // Sätter amountQuestions till 1 för att inte CategoryInput ska sätta kategorin till depleted direkt
         readonly Random random = new Random();
 
         public void GetCategory(int [] userInput, int round)
         {
             bool validLine = false;
             Array.Clear(userInput, 0, userInput.Length); // Rensar []userInput från tidigare rundans inputs.
+            Array.Clear(keepPoints, 0, keepPoints.Length);
 
-            for (int i = 0; i < 6; i++) // Slumpar en rad 6 gånger och sparar kategorierna i de randerna och skickar dem till Program.cs för att skrivas ut.
+            for (int i = 0; i < 6; i++) // Slumpar en rad 6 gånger och sparar kategorierna från dom raderna.
             {
                 do
                 {
                     using StreamReader sr = File.OpenText(path); // Använder StreamReader för att läsa varje rad i .tsv filen
                     
-                    while ((lines = sr.ReadLine()) != null) /// Fortsätter att läsa varje rad så länge raden inte innehåller null
+                    while ((rows = sr.ReadLine()) != null) /// Fortsätter att läsa varje rad så länge raden inte innehåller null
                     {
-                        columns = lines.Split("\t"); // Delar en sträng (lines) i en substrings beroende på "sträng sepereraren"("\t") som sedan lagras i element inom en array ([]columns)
+                        columns = rows.Split("\t"); // Delar en sträng (rows) in i substrings beroende på "sträng sepereraren"("\t") som sedan lagras i element inom en array ([]columns)
 
                         int randomLine = random.Next(1, 359679); // Slumpar nummer mellan rad 1 och sista raden
 
-                        for (int j = 0; j < randomLine; j++) // Hoppar över alla rader innan RandomLine.
+                        for (int j = 0; j < randomLine; j++) // Hoppar över alla rader innan randomLine.
                         {
                             sr.ReadLine();
                         }
@@ -38,7 +40,6 @@ namespace Jeopardy
                         {
                             keepCategory[i] = columns[3]; // Sparar kategorierna i []keepCategory
                             validLine = true;
-                            break;
                         }
                         else
                         {
@@ -54,14 +55,23 @@ namespace Jeopardy
             using StreamReader sr = File.OpenText(path);
 
             int count = 0;
+            missingQuestion = 0;
 
-            while ((lines = sr.ReadLine()) != null)
+            while ((rows = sr.ReadLine()) != null)
             {
-                columns = lines.Split("\t");
+                columns = rows.Split("\t");
                 if (columns[0] == round.ToString() && columns[3] == keepCategory[userInput[pos - 1] - 1].ToString() && !keepPoints.Contains(int.Parse(columns[1])) && keepPoints[4] == 0) // Kollar så att GetPoints inte skriver ut poäng som redan skrivits ut. och att ifall en femte fråga ha lagrats så ska inga mer lagras.
                 {
                     keepPoints[count] = int.Parse(columns[1]);
                     count++;
+                }
+            }
+
+            for (int i = 0; i < keepPoints.Length; i++) // Ifall en kategori har mindre än 5 frågor så måste jag ha något som tar bort antal frågor som förvantas i en kateogri i JeopardyGame.cs
+            {
+                if (keepPoints[i] == 0)
+                {
+                    missingQuestion++;
                 }
             }
         }
@@ -69,9 +79,9 @@ namespace Jeopardy
         public void GetQuestion(int[] userInput, int pos)
         {
             using StreamReader sr = File.OpenText(path);
-            while ((lines = sr.ReadLine()) != null)
+            while ((rows = sr.ReadLine()) != null)
             {
-                columns = lines.Split("\t");
+                columns = rows.Split("\t");
                 if (columns[3] == keepCategory[userInput[pos - 2] - 1].ToString() && userInput[pos - 1].ToString() == columns[1]) // Kollar om rad x innehåller samma kategori och poäng som användaren valde
                 {
                     keepQuestion = columns[5];
