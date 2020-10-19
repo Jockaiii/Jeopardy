@@ -25,13 +25,13 @@ namespace Jeopardy
                 {
                     using StreamReader sr = File.OpenText(path); // Använder StreamReader för att läsa varje rad i .tsv filen
                     
-                    while ((rows = sr.ReadLine()) != null) /// Fortsätter att läsa varje rad så länge raden inte innehåller null
+                    while ((rows = sr.ReadLine()) != null) // Fortsätter att läsa varje rad så länge raden inte innehåller null
                     {
                         columns = rows.Split("\t"); // Delar en sträng (rows) in i substrings beroende på "sträng sepereraren"("\t") som sedan lagras i element inom en array ([]columns)
 
-                        int randomLine = random.Next(1, 359679); // Slumpar nummer mellan rad 1 och sista raden
+                        int randomRow = random.Next(1, 359679); // Slumpar nummer mellan rad 1 och sista raden
 
-                        for (int j = 0; j < randomLine; j++) // Hoppar över alla rader innan randomLine.
+                        for (int j = 0; j < randomRow; j++) // Hoppar över alla rader innan randomLine.
                         {
                             sr.ReadLine();
                         }

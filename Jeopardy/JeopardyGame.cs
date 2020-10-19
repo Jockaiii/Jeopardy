@@ -7,7 +7,6 @@ namespace Jeopardy
     {
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
-
         static string playerName;
 
         public static void StartRound(int round, JeopardyGame game)
