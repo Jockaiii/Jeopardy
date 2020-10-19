@@ -207,8 +207,11 @@ namespace Jeopardy
             else
             {
                 Console.WriteLine("Incorrect!");
-                Console.WriteLine("The correct answer is: " + keepAnswer, playerName);
+                Console.WriteLine(playerName + " the correct answer is: " + keepAnswer);
                 score -= nextScore;
+                Console.WriteLine("Press 'Enter' to continue");
+                Console.ReadLine();
+                Console.Clear();
             }
             Console.WriteLine("--------------------------");
             Console.WriteLine(playerName + " your score is: " + score);
