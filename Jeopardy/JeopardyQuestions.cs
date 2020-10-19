@@ -7,9 +7,9 @@ namespace Jeopardy
     class JeopardyQuestions
     {
         public string[] keepCategory = new string[6];
-        protected string [] columns = null; 
-        public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", rows = string.Empty, keepQuestion, keepAnswer;
+        protected string [] columns = null;
         public int[] keepPoints = new int[5];
+        public string path = @"..\..\..\jeopardy_questions\master_season1-36.tsv\master_season1-36.tsv", rows = string.Empty, keepQuestion, keepAnswer;
         public int missingQuestion;
         readonly Random random = new Random();
 

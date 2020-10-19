@@ -19,6 +19,7 @@ namespace Jeopardy
                 Console.Write("Enter playername: ");
                 playerName = Console.ReadLine();
                 Console.Clear();
+
                 Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine("Please select your category and amount of points.");
                 Console.WriteLine("--------------------------------------------------------------");
@@ -42,7 +43,7 @@ namespace Jeopardy
                 Console.WriteLine(i + 1 + ": " + questions.keepCategory[i]);
             }
 
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--------------------------");
             Console.Write("Select a category (1-6): ");
         }
 
@@ -99,8 +100,10 @@ namespace Jeopardy
                 }
             } while (inputCheck == false);
 
+            Console.Clear();
+            Console.WriteLine("--------------------------");
             Console.WriteLine("Category: " + questions.keepCategory[category - 1]);
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--------------------------");
 
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
         }
@@ -131,7 +134,7 @@ namespace Jeopardy
                 }
             }
 
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--------------------------");
             Console.Write("Select amount of points: ");
         }
 
@@ -180,26 +183,28 @@ namespace Jeopardy
                 }
             } while (inputCheck == false);
 
+            Console.Clear();
             pos++;
         }
 
         public void PrintQuestion(JeopardyQuestions questions)
         {
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--------------------------------------------------------------");
             Console.WriteLine("Question for " + points + " points: " + questions.keepQuestion);
+            Console.WriteLine("--------------------------------------------------------------");
         }
 
         static public string AnswerInput()
         {
-            Console.WriteLine("Input your answer: ");
+            Console.Write("Input your answer: ");
             string answer = Console.ReadLine();
             return answer == string.Empty ? AnswerInput() : answer;
         }
 
-        public void Score(bool CheckAnswer, int nextScore, string keepAnswer)
+        public void Score(bool checkAnswer, int nextScore, string keepAnswer)
         {
             Console.Clear();
-            if (CheckAnswer)
+            if (checkAnswer)
             {
                 Console.WriteLine("Correct!");
                 score += nextScore;
