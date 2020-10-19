@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 
 namespace Jeopardy
 {
@@ -7,6 +9,7 @@ namespace Jeopardy
     {
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
+        List<string> players = new List<string>();
         static string playerName;
 
         public static void StartRound(int round, JeopardyGame game)
@@ -16,6 +19,7 @@ namespace Jeopardy
             if (round == 1)
             {
                 Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
+                Console.WriteLine("How many players?");
                 Console.Write("Enter playername: ");
                 playerName = Console.ReadLine();
                 Console.Clear();
