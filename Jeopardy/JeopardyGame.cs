@@ -11,30 +11,41 @@ namespace Jeopardy
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
         static string playerName;
-        static int players;
+        static string[] playersArray;
+        static int numberOfPlayers;
         private static string playername;
 
         public static void StartRound(int round, JeopardyGame game)
         {
             game.categoriesDepleted = 0; // Sätter categoriesDeplted till 0 vid start av ny runda.
             
-                if (round == 1)
+            if (round == 1)
                 {
                     Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
                     Console.WriteLine("How many players?");
-                    players = Convert.ToInt32(Console.ReadLine());
-                    if(players == 1)
-                    {
+                    numberOfPlayers = Convert.ToInt32(Console.ReadLine());
+                playersArray = new string[numberOfPlayers];
+                if (numberOfPlayers == 1)
+                {
                     Console.Write("Enter playername: ");
                     playerName = Console.ReadLine();
+                    playersArray[0] = playername;
                 }
-                    else
+                else if (numberOfPlayers > 1)
+                {
+                    for (int i = 0; i < numberOfPlayers; i++)
                     {
-                    for (int players = 0; players < 10; players++) // Jobbar med att lägga till fler spelare, ska fråga Kalle imorgon! Mvh Nils ;)
+                        Console.WriteLine("Enter playername: {0}");
+                        playername = Console.ReadLine();
+                        playersArray[i] = playername;
+                    }
+                    
+                }
+                    /*for (int players = 0; players < 10; players++) // Jobbar med att lägga till fler spelare, ska fråga Kalle imorgon! Mvh Nils ;)
                     {
                         Console.WriteLine("Enter players names: " + playername);
                     }
-                    }
+                    }*/
                     Console.Clear();
 
                     Console.WriteLine("--------------------------------------------------------------");
@@ -230,15 +241,16 @@ namespace Jeopardy
             else
             {
                 Console.WriteLine("Incorrect!");
-                Console.WriteLine(playerName + " the correct answer is: " + keepAnswer);
+                Console.WriteLine(playersArray[0] + " the correct answer is: " + keepAnswer);
                 score -= nextScore;
                 Console.WriteLine("Press 'Enter' to continue");
                 Console.ReadLine();
                 Console.Clear();
             }
             Console.WriteLine("--------------------------");
-            Console.WriteLine(playerName + " your score is: " + score);
+            Console.WriteLine(playersArray[0] + " your score is: " + score);
             Console.WriteLine("--------------------------");
         }
     }
 }
+
