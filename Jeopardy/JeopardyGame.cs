@@ -115,7 +115,6 @@ namespace Jeopardy
             Console.WriteLine("--------------------------");
 
             CategoryDepleted(userInput, questions); // Tillkallar för att se till så att man inte kan välja en depleted kategori.
-            
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
         }
 
@@ -250,7 +249,6 @@ namespace Jeopardy
                 categoriesDepleted++;
                 questions.keepCategory[category - 1] = "Depleted";
                 Score(true, 0, null);
-                PrintCategories(questions);
             }
         }
     }
