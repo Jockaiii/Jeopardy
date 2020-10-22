@@ -14,7 +14,7 @@ namespace Jeopardy
         public JeopardyInput()
         {
             bool categoryDepleted, isAnswered;
-            string category;
+            string category, answer;
             int points;
         }
 

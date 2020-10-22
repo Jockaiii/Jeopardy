@@ -15,7 +15,7 @@ namespace Jeopardy
 
         public void GetCategory(int [] userInput, int round)
         {
-            bool validLine = false;
+            bool validRow = false;
             Array.Clear(userInput, 0, userInput.Length); // Rensar []userInput från tidigare rundans inputs.
             Array.Clear(keepPoints, 0, keepPoints.Length);
 
@@ -39,14 +39,14 @@ namespace Jeopardy
                         if (columns[0] == round.ToString() && !keepCategory.Contains(columns[3])) // Kollar om column[0] i raden är = round och så att kategorin inte tidigare har valts. 
                         {
                             keepCategory[i] = columns[3]; // Sparar kategorierna i []keepCategory
-                            validLine = true;
+                            validRow = true;
                         }
                         else
                         {
-                            validLine = false;
+                            validRow= false;
                         }
                     }
-                } while (validLine != true); // Fortsätter att slumpa en rad så länge den inte är till för den nuvarande rundan.
+                } while (validRow != true); // Fortsätter att slumpa en rad så länge den inte är till för den nuvarande rundan.
             }
         }
 
