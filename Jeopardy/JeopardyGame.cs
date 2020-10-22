@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Transactions;
 
 namespace Jeopardy
 {
@@ -10,10 +7,10 @@ namespace Jeopardy
     {
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
-        static string playerName;
         static string[] playersArray;
         static int numberOfPlayers;
         private static string playername;
+        static string playerName;
 
         public static void StartRound(int round, JeopardyGame game)
         {
@@ -23,8 +20,10 @@ namespace Jeopardy
                 {
                     Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
                     Console.WriteLine("How many players?");
+
                     numberOfPlayers = Convert.ToInt32(Console.ReadLine());
-                playersArray = new string[numberOfPlayers];
+                    playersArray = new string[numberOfPlayers];
+
                 if (numberOfPlayers == 1)
                 {
                     Console.Write("Enter playername: ");
@@ -39,7 +38,6 @@ namespace Jeopardy
                         playername = Console.ReadLine();
                         playersArray[i] = playername;
                     }
-                    
                 }
                     /*for (int players = 0; players < 10; players++) // Jobbar med att lägga till fler spelare, ska fråga Kalle imorgon! Mvh Nils ;)
                     {
@@ -84,30 +82,12 @@ namespace Jeopardy
             {
                 try
                 {
-                    maxQuestions = 0;
                     category = int.Parse(Console.ReadLine());
-
-                    for (int i = 0; i < userInput.Length; i += 2)
-                    {
-                        if (userInput[i] == category) // Kollar om kategorin redan finns lagrad i []Input. Och om den gör det så ökar maxQuestions +1. 
-                        {
-                            maxQuestions++;
-                        }
-                    }
 
                     if (questions.keepCategory[category - 1] == "Depleted")
                     {
                         Console.WriteLine("Please select a non depleted category");
                         Console.Write("Select a number between 1-6: ");
-                        inputCheck = false;
-                    }
-                    else if (maxQuestions == 5 - questions.missingQuestion)
-                    {
-                        Console.WriteLine("Please select a non depleted category");
-                        Console.Write("Select a number between 1-6: ");
-                        categoriesDepleted++;
-                        questions.keepCategory[category - 1] = "Depleted";
-                        category = 7;
                         inputCheck = false;
                     }
                     else if (category > 0 && category <= 6)
@@ -134,6 +114,8 @@ namespace Jeopardy
             Console.WriteLine("Category: " + questions.keepCategory[category - 1]);
             Console.WriteLine("--------------------------");
 
+            CategoryDepleted(userInput, questions); // Tillkallar för att se till så att man inte kan välja en depleted kategori.
+            
             pos++; // Räkna antalet gånger som metoden kallas så jag vet vilken position jag ska lagra inputs i []Input
         }
 
@@ -218,6 +200,7 @@ namespace Jeopardy
 
         public void PrintQuestion(JeopardyQuestions questions)
         {
+            Console.WriteLine("Category: " + questions.keepCategory[category - 1]);
             Console.WriteLine("--------------------------------------------------------------");
             Console.WriteLine("Question for " + points + " points: " + questions.keepQuestion);
             Console.WriteLine("--------------------------------------------------------------");
@@ -241,15 +224,34 @@ namespace Jeopardy
             else
             {
                 Console.WriteLine("Incorrect!");
-                Console.WriteLine(playersArray[0] + " the correct answer is: " + keepAnswer);
+                Console.WriteLine(playersArray[0] + " The correct answer is: " + keepAnswer);
                 score -= nextScore;
-                Console.WriteLine("Press 'Enter' to continue");
-                Console.ReadLine();
-                Console.Clear();
             }
+
             Console.WriteLine("--------------------------");
             Console.WriteLine(playersArray[0] + " your score is: " + score);
             Console.WriteLine("--------------------------");
+        }
+
+        public void CategoryDepleted(int[] userInput, JeopardyQuestions questions)
+        {
+            maxQuestions = 0;
+
+            for (int i = 0; i < userInput.Length; i += 2)
+            {
+                if (userInput[i] == category) // Kollar om kategorin redan finns lagrad i []Input. Och om den gör det så ökar maxQuestions +1. 
+                {
+                    maxQuestions++;
+                }
+            }
+
+            if (maxQuestions == 5 - questions.missingQuestion)
+            {
+                categoriesDepleted++;
+                questions.keepCategory[category - 1] = "Depleted";
+                Score(true, 0, null);
+                PrintCategories(questions);
+            }
         }
     }
 }

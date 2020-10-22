@@ -16,7 +16,7 @@
 
                 questions.GetCategory(userInput, round); // Tillkallar en metod som slumpar och skriver ut 6 kategorier.
 
-                while (game.categoriesDepleted <= 6) // Forsätter be användaren om kategori, poäng, frågor och svar tills alla kategorierna är tomma på lediga frågor.
+                while (game.categoriesDepleted < 6) // Forsätter be användaren om kategori, poäng, frågor och svar tills alla kategorierna är tomma på lediga frågor.
                 {
                     game.PrintCategories(questions); // Tillkallar en metod som skriver ut kategorierna.
                     game.CategoryInput(userInput, questions); // Tillkallar en metod som hämtar användarens val av kategori.
