@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Transactions;
 
 namespace Jeopardy
 {
@@ -8,35 +10,59 @@ namespace Jeopardy
     {
         protected int category, points, score = 0;
         public int pos = 0, maxQuestions, categoriesDepleted;
-        List<string> players = new List<string>();
         static string playerName;
+        static string[] playersArray;
+        static int numberOfPlayers;
+        private static string playername;
 
         public static void StartRound(int round, JeopardyGame game)
         {
             game.categoriesDepleted = 0; // Sätter categoriesDeplted till 0 vid start av ny runda.
-
+            
             if (round == 1)
-            {
-                Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
-                Console.WriteLine("How many players?");
-                Console.Write("Enter playername: ");
-                playerName = Console.ReadLine();
-                Console.Clear();
+                {
+                    Console.WriteLine("Welcome to jeopardy! The game where you answer with questions!");
+                    Console.WriteLine("How many players?");
+                    numberOfPlayers = Convert.ToInt32(Console.ReadLine());
+                playersArray = new string[numberOfPlayers];
+                if (numberOfPlayers == 1)
+                {
+                    Console.Write("Enter playername: ");
+                    playerName = Console.ReadLine();
+                    playersArray[0] = playername;
+                }
+                else if (numberOfPlayers > 1)
+                {
+                    for (int i = 0; i < numberOfPlayers; i++)
+                    {
+                        Console.WriteLine("Enter playername: {0}");
+                        playername = Console.ReadLine();
+                        playersArray[i] = playername;
+                    }
+                    
+                }
+                    /*for (int players = 0; players < 10; players++) // Jobbar med att lägga till fler spelare, ska fråga Kalle imorgon! Mvh Nils ;)
+                    {
+                        Console.WriteLine("Enter players names: " + playername);
+                    }
+                    }*/
+                    Console.Clear();
 
-                Console.WriteLine("--------------------------------------------------------------");
-                Console.WriteLine("Please select your category and amount of points.");
-                Console.WriteLine("--------------------------------------------------------------");
-            }
-            else if (round == 2)
-            {
-                game.Score(true, 0, null);
-                Console.WriteLine("Round 2 Lets go again!");
-            }
-            else
-            {
-                game.Score(true, 0, null);
-                Console.WriteLine("Round 3!");
-            }
+                    Console.WriteLine("--------------------------------------------------------------");
+                    Console.WriteLine("Please select your category and amount of points.");
+                    Console.WriteLine("--------------------------------------------------------------");
+                }
+                else if (round == 2)
+                {
+                    game.Score(true, 0, null);
+                    Console.WriteLine("Round 2 Lets go again!");
+                }
+                else
+                {
+                    game.Score(true, 0, null);
+                    Console.WriteLine("Round 3!");
+                }
+            
         }
 
         public void PrintCategories(JeopardyQuestions questions)
@@ -215,15 +241,16 @@ namespace Jeopardy
             else
             {
                 Console.WriteLine("Incorrect!");
-                Console.WriteLine(playerName + " the correct answer is: " + keepAnswer);
+                Console.WriteLine(playersArray[0] + " the correct answer is: " + keepAnswer);
                 score -= nextScore;
                 Console.WriteLine("Press 'Enter' to continue");
                 Console.ReadLine();
                 Console.Clear();
             }
             Console.WriteLine("--------------------------");
-            Console.WriteLine(playerName + " your score is: " + score);
+            Console.WriteLine(playersArray[0] + " your score is: " + score);
             Console.WriteLine("--------------------------");
         }
     }
 }
+

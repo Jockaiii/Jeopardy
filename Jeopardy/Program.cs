@@ -43,3 +43,5 @@
 //TODO Visuellt:
 // Fixa så att man ser ifall frågan har valts och ifall kategorin har slut på ovalda frågor
 // Fixa så svar inte kräver bindestreck, apostrofer och paranteser. Samt att man inte måste skriva t.ex "an apple". utan bara "apple".
+// Array för att hålla koll på spelares resultat
+// Variabel för att hålla koll på tur
