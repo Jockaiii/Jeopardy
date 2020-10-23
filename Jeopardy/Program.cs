@@ -28,6 +28,8 @@
                     questions.GetQuestion(userInput, game.pos); // Tillkallar en metod som hämtar frågan beroende på vad användaren har valt för kategori och poäng.
                     game.PrintQuestion(questions); // Tillkallar en metod som skriver ut den hämtade frågan.
                     questions.CheckAnswer(JeopardyGame.AnswerInput(), userInput, game, game.pos);  // Kollar ifall svaret är korrekt och tilldelar poäng beroende på det.
+
+                    game.CategoryDepleted(userInput, questions); // Tillkallar för att se till så att man inte kan välja en depleted kategori.
                 } 
 
                 round++; // ökar round så att jag kan hämta kategorier, poäng, inputs och svar på nästa runda.
