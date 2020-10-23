@@ -39,6 +39,7 @@
 }
 // TODO Bakgrund:
 // Fixa så att man måste lägga till en fråga med svaret
+// Fixa så att om 2 frågor i samma kategori har samma poäng så måste jag kolla på "daily double" för att hämta rätt fråga och inte bara en fråga med samma poäng.
 // Fixa så att jag inte initsierar StreamReader varje gång jag använder det i en metod. Göra en StreamReader() overload som skickar tillbaks kategorier, frågor eller svar beroende på parametern som skickas in
 // Fixa så att man kan spela mer än en spelare? botar eller en annan mänsklig spelare?
 
